@@ -11,6 +11,7 @@ use App\Models\Quotation;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -44,9 +45,100 @@ class DatabaseSeeder extends Seeder
 
         User::factory(100)->create();
 
-        MeasurementUnit::factory(20)->create();
-        Category::factory(10)->hasSubCategories(rand(2, 5))->create();
-        Product::factory(200)->create();
+        DB::beginTransaction();
+
+        // create product categories
+        $file = fopen(database_path('Categories.csv'), 'r');
+        $temp_category = '';
+
+        while (($data = fgetcsv($file)) !== FALSE) {
+            if (empty($temp_category) OR $temp_category->name !== $data[0]) {
+                $temp_category = Category::create(['name' => $data[0]]);
+            }
+
+            if (!empty($data[1])) {
+                Category::create([
+                    'name' => $data[1],
+                    'parent_id' => $temp_category->id,
+                ]);
+            }
+        }
+
+        fclose($file);
+
+        // create units of measurement
+        $file = fopen(database_path('MeasurementUnits.csv'), 'r');
+
+        while (($data = fgetcsv($file)) !== FALSE) {
+            MeasurementUnit::create([
+                'name' => $data[0],
+            ]);
+        }
+
+        fclose($file);
+
+        // create products
+        // test kits
+        $file = fopen(database_path('TestKits.csv'), 'r');
+
+        while (($data = fgetcsv($file)) !== FALSE) {
+            Product::create([
+                'image' => bin2hex(random_bytes(16)).'.webp',
+                'name' => $data[1],
+                'description' => null,
+                'price' => fake()->randomFloat(2, 100, 5000),
+                'status' => ['available', 'unavailable', 'archived'][rand(0, 2)],
+                'measurement_unit_id' => MeasurementUnit::where('name', $data[2])->first()->id,
+                'category_id' => Category::where('name', $data[0])->first()->id,
+                'created_at' => '2024-01-01 00:00:00',
+                'updated_at' => '2024-01-01 00:00:00',
+                'last_modified_by_id' => 1,
+            ]);
+        }
+
+        fclose($file);
+
+        // Vaccines
+        $file = fopen(database_path('Vaccines.csv'), 'r');
+
+        while (($data = fgetcsv($file)) !== FALSE) {
+            Product::create([
+                'image' => bin2hex(random_bytes(16)).'.webp',
+                'name' => $data[1],
+                'description' => null,
+                'price' => fake()->randomFloat(2, 100, 5000),
+                'status' => ['available', 'unavailable', 'archived'][rand(0, 2)],
+                'measurement_unit_id' => MeasurementUnit::where('name', $data[2])->first()->id,
+                'category_id' => Category::where('name', $data[0])->first()->id,
+                'created_at' => '2024-01-01 00:00:00',
+                'updated_at' => '2024-01-01 00:00:00',
+                'last_modified_by_id' => 1,
+            ]);
+        }
+
+        fclose($file);
+
+        // Medicine Supplies
+        $file = fopen(database_path('MedicineSupplies.csv'), 'r');
+
+        while (($data = fgetcsv($file)) !== FALSE) {
+            Product::create([
+                'image' => bin2hex(random_bytes(16)).'.webp',
+                'name' => $data[0],
+                'description' => null,
+                'price' => fake()->randomFloat(2, 100, 5000),
+                'status' => ['available', 'unavailable', 'archived'][rand(0, 2)],
+                'measurement_unit_id' => MeasurementUnit::where('name', $data[1])->first()->id,
+                'category_id' => Category::where('name', 'Medicine Supplies')->first()->id,
+                'created_at' => '2024-01-01 00:00:00',
+                'updated_at' => '2024-01-01 00:00:00',
+                'last_modified_by_id' => 1,
+            ]);
+        }
+
+        fclose($file);
+
+        DB::commit();
 
         User::where('role', 'affiliate')->get()->map(function ($affiliate) {
             Customer::factory()->create([

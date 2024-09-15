@@ -58,6 +58,8 @@ const statusTagColors = {
 onMounted(() => {
     axios.get(route('api.categories'))
         .then(response => {
+
+            console.log(response.data);
             forEach(response.data, category => {
                 categories.value.push({name: category.name, level: 'main'});
 
