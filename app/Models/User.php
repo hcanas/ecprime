@@ -75,8 +75,41 @@ class User extends Authenticatable
 
     protected static function booted(): void
     {
-        static::saving(function (self $user) {
-            $user->setAttribute('last_modified_by_id', Auth::user()->id);
+        static::creating(function (self $user) {
+            $user->setAttribute('last_modified_by_id', Auth::user()?->id);
+            UserActivity::create([
+                'user_id' => Auth::user()->id,
+                'details' => 'Registered new user with email address ' . $user->email . '.',
+            ]);
+        });
+
+        static::updating(function (self $user) {
+            $user->setAttribute('last_modified_by_id', Auth::user()?->id);
+            if ($user->isDirty('role')) {
+                UserActivity::create([
+                    'user_id' => Auth::user()->id,
+                    'details' => 'Updated role of user with email address ' . $user->email . '.',
+                ]);
+            } elseif ($user->isDirty('status')) {
+                if ($user->status === 'active') {
+                    UserActivity::create([
+                        'user_id' => Auth::user()->id,
+                        'details' => 'Restored access of user with email address ' . $user->email . '.',
+                    ]);
+                } elseif ($user->status === 'restricted') {
+                    UserActivity::create([
+                        'user_id' => Auth::user()->id,
+                        'details' => 'Restricted access of user with email address ' . $user->email . '.',
+                    ]);
+                }
+            }
+        });
+
+        static::deleting(function (self $user) {
+            UserActivity::create([
+                'user_id' => Auth::user()->id,
+                'details' => 'Deleted user with email address ' . $user->email . '.',
+            ]);
         });
     }
 
@@ -88,5 +121,10 @@ class User extends Authenticatable
     public function products(): HasMany
     {
         return $this->hasMany(Product::class, 'last_modified_by_id');
+    }
+
+    public function activities(): HasMany
+    {
+        return $this->hasMany(UserActivity::class);
     }
 }

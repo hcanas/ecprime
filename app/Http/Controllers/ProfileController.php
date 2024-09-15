@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\UserActivity;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,9 +18,20 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): Response
     {
+        $activities = UserActivity::search($request->get('query'), function ($driver, $query, $options) {
+            $options['filter'] = 'user_id = ' . Auth::user()->id;
+            $options['sort'] = ['created_at:desc'];
+            $options['limit'] = 15;
+
+            return $driver->search($query, $options);
+        });
+
         return Inertia::render('Profile/Edit', [
-            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
+            'activities' => $activities->get()->map(fn ($activity) => [
+                'details' => $activity->details,
+                'created_at' => $activity->created_at,
+            ]),
         ]);
     }
 

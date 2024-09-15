@@ -1,3 +1,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    h1 {
+        @apply text-2xl
+    }
+
+    h2 {
+        @apply text-xl
+    }
+
+    h3 {
+        @apply text-lg
+    }
+
+    h5 {
+        @apply text-sm
+    }
+
+    h6 {
+        @apply text-xs
+    }
+
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+}

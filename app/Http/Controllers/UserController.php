@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use App\Models\UserActivity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -27,6 +28,7 @@ class UserController extends Controller
             }
 
             $options['sort'] = ['updated_at:desc'];
+            $options['limit'] = 15;
 
             return $meilisearch->search($query, $options);
         });
@@ -35,7 +37,7 @@ class UserController extends Controller
             'can' => [
                 'create_user' => Auth::user()->can('create', User::class),
             ],
-            'users' => $users->paginate($request->get('per_page', 10))
+            'users' => $users->paginate($request->get('per_page', 15))
                 ->withQueryString()
                 ->through(fn ($user) => [
                     'id' => $user->id,
@@ -74,12 +76,15 @@ class UserController extends Controller
             'status' => 'active',
         ]);
 
-        $status = Password::sendResetLink(
-            $request->only('email')
-        );
+        $status = Password::sendResetLink($request->only('email'));
 
         if ($status == Password::RESET_LINK_SENT) {
-            return back();
+            return redirect()->route('users.index')->with([
+                'message' => [
+                    'content' => 'A registration confirmation email has been sent to '.$request->get('email').'.',
+                    'type' => 'success',
+                ],
+            ]);
         }
 
         throw ValidationException::withMessages([
@@ -90,14 +95,25 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(User $user, Request $request)
     {
         if (Gate::none(['updateRole', 'updateStatus'], $user)) abort(403);
+
+        $activities = UserActivity::search($request->get('query'), function ($driver, $query, $options) use ($user) {
+            $options['filter'] = 'user_id = ' . $user->id;
+            $options['sort'] = ['created_at:desc'];
+
+            return $driver->search($query, $options);
+        });
 
         $user->load('lastModifiedBy');
 
         return Inertia::render('Users/ManageUser', [
             'user' => $user,
+            'activities' => $activities->get()->map(fn ($activity) => [
+                'details' => $activity->details,
+                'created_at' => $activity->created_at,
+            ]),
         ]);
     }
 
@@ -108,9 +124,23 @@ class UserController extends Controller
     {
         if (Gate::none(['updateRole', 'updateStatus'], $user)) abort(403);
 
-        $user->fill($request->validated())->save();
+        $user->fill($request->validated());
 
-        return back();
+        if ($user->isDirty('role')) {
+            $message = [
+                'content' => 'Role has been updated.',
+                'type' => 'success',
+            ];
+        } elseif ($user->isDirty('status')) {
+            $message = [
+                'content' => 'Status has been updated.',
+                'type' => 'success',
+            ];
+        }
+
+        $user->save();
+
+        return back()->with('message', $message ?? null);
     }
 
     /**
@@ -120,9 +150,19 @@ class UserController extends Controller
     {
         Gate::authorize('delete', $user);
 
+        if (count($user->activities)) {
+            return back()->with('message', [
+                    'content' => 'Failed to delete user account.',
+                    'type' => 'error',
+                ]);
+        }
+
         $user->delete();
 
         return redirect()->route('users.index')
-            ->with('message', $user->email.'\'s account has been deleted.');
+            ->with('message', [
+                'content' => $user->email.'\'s account has been deleted.',
+                'type' => 'error',
+            ]);
     }
 }

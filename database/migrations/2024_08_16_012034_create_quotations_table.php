@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('quotations', function (Blueprint $table) {
             $table->id();
+            $table->string('reference_number');
             $table->foreignIdFor(Customer::class);
             $table->string('status');
             $table->foreignIdFor(User::class, 'last_modified_by_id')->nullable();

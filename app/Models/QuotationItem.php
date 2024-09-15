@@ -13,8 +13,10 @@ class QuotationItem extends Model
 
     protected $fillable = [
         'quotation_id',
+        'image',
         'name',
         'description',
+        'brand',
         'price',
         'quantity',
         'measurement_unit',
@@ -23,7 +25,7 @@ class QuotationItem extends Model
 
     protected static function booted(): void
     {
-        static::saving(function (self $product) {
+        static::updating(function (self $product) {
             $product->setAttribute('last_modified_by_id', Auth::user()->id);
         });
     }

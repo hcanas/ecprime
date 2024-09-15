@@ -1,7 +1,10 @@
 <?php
 
 use App\Models\Product;
+use App\Models\PurchaseOrder;
+use App\Models\Quotation;
 use App\Models\User;
+use App\Models\UserActivity;
 
 return [
 
@@ -141,8 +144,21 @@ return [
                 'filterableAttributes' => ['role'],
                 'sortableAttributes' => ['updated_at'],
             ],
+            UserActivity::class => [
+                'filterableAttributes' => ['user_id', 'details'],
+                'sortableAttributes' => ['created_at'],
+            ],
             Product::class => [
-                'filterableAttributes' => ['category', 'status'],
+                'filterableAttributes' => ['main_category', 'sub_category', 'status'],
+                'sortableAttributes' => ['updated_at'],
+            ],
+            Quotation::class => [
+                'filterableAttributes' => ['customer.email', 'status'],
+                'sortableAttributes' => ['updated_at'],
+            ],
+            PurchaseOrder::class => [
+                'filterableAttributes' => ['customer.email', 'status'],
+                'sortableAttributes' => ['updated_at'],
             ],
         ],
     ],

@@ -15,6 +15,11 @@ class ProductRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'image' => [
+                ...$this->isPrecognitive() ? [] : ['nullable'],
+                'file',
+                'image',
+            ],
             'name' => [
                 'required',
                 Rule::unique('products')->ignore($this->route('product')?->id),

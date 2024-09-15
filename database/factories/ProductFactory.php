@@ -19,6 +19,7 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
+            'image' => bin2hex(random_bytes(16)).'.webp',
             'name' => fake()->unique()->words(rand(2, 10), true),
             'description' => [null, fake()->words(rand(5, 20), true)][rand(0, 1)],
             'price' => fake()->numberBetween(1, 5000),

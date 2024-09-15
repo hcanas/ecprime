@@ -16,8 +16,10 @@ return new class extends Migration
         Schema::create('quotation_items', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Quotation::class);
+            $table->string('image');
             $table->string('name');
             $table->string('description')->nullable();
+            $table->string('brand')->nullable();
             $table->decimal('price', 15);
             $table->unsignedInteger('quantity');
             $table->string('measurement_unit');

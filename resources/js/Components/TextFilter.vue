@@ -2,6 +2,7 @@
 import {ref, watch} from "vue";
 import {debounce, omit} from "lodash";
 import {router} from "@inertiajs/vue3";
+import TextInput from "@/Components/TextInput.vue";
 
 const query = ref(route().params['query'] ?? '');
 
@@ -20,5 +21,9 @@ watch(
 </script>
 
 <template>
-    <input type="search" v-model="query" autofocus />
+    <TextInput v-model="query"
+               autofocus
+               class="w-96"
+               placeholder="Search keyword..."
+               type="search" />
 </template>

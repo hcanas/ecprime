@@ -1,0 +1,92 @@
+---
+title: "Quotation"
+preheader: "Your requested quotation is here!"
+bodyClass: bg-slate-50
+---
+
+<x-main>
+  <div class="bg-slate-50 sm:px-4 font-sans">
+    <table align="center">
+      <tr>
+        <td class="w-full">
+          <div class="my-12 sm:my-8 text-center">
+            <a href="https://maizzle.com">
+              <img src="@{{ asset('images/logo.png') }}" width="70" alt="EC Prime">
+            </a>
+          </div>
+
+          <table class="w-full">
+            <tr>
+              <td class="p-12 sm:px-6 text-base text-slate-700 bg-white rounded shadow-sm">
+                <div class="flex justify-between">
+                  <span>Ref #: @{{ $reference_number }}</span>
+                  <span>@{{ $date_sent }}</span>
+                </div>
+
+                <x-spacer class="leading-16 sm:leading-8" />
+
+                @php
+                  $total = 0;
+                @endphp
+                <table>
+                  <tr>
+                    <th class="text-left p-2">Product</th>
+                    <th class="text-right p-2">Qty</th>
+                    <th class="text-right p-2">Price</th>
+                    <th class="text-right p-2">Total</th>
+                  </tr>
+                  <tr>
+                    <td colspan="4">
+                      <x-divider space-y="1px" />
+                    </td>
+                  </tr>
+                  @foreach($available_items AS $item)
+                    @php
+                        if ($item->status === 'available') {
+                        $total += ($item->quantity * $item->price);
+                      }
+                    @endphp
+                    <tr>
+                      <td class="p-2">
+                        <div class="flex flex-col">
+                          <span>@{{ $item->name }} (@{{ $item->brand ?? 'No Brand' }})</span>
+                          <span class="text-sm w-96 truncate">@{{ $item->description }}</span>
+                        </div>
+                      </td>
+                      <td class="text-right p-2">@{{ number_format($item->quantity)  }}</td>
+                      <td class="text-right p-2">&#8369;@{{ number_format($item->price, 2) }}</td>
+                      <td class="text-right p-2">&#8369;@{{ number_format($item->quantity * $item->price, 2) }}</td>
+                    </tr>
+                    <tr>
+                      <td colspan="4">
+                        <x-divider space-y="3px" />
+                      </td>
+                    </tr>
+                  @endforeach
+                  <tr>
+                    <td colspan="4" class="text-right">
+                      <span class="font-bold">&#8369;@{{ number_format($total, 2) }}</span>
+                    </td>
+                  </tr>
+                </table>
+
+                <x-spacer class="leading-16 sm:leading-8" />
+
+                @if (count($unavailable_items))
+                  <p class="italic">The following items are currently not available:</p>
+
+                  <ul>
+                    @foreach($unavailable_items AS $item)
+                      <li>@{{ $item->name }} (@{{ $item->brand ?? 'No Brand' }})</li>
+                    @endforeach
+                  </ul>
+                @endif
+
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+</x-main>

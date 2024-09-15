@@ -7,7 +7,8 @@ defineProps({
 </script>
 
 <template>
-    <Link class="font-medium hover:text-primary-400 px-3 py-2 rounded transition-colors ease-in-out" :class="active ? 'text-primary-500' : 'text-neutral-400'">
+    <Link :class="active ? 'text-primary-500' : 'text-neutral-500'"
+          class="font-medium hover:text-primary-500 px-3 py-2 rounded transition-colors ease-in-out">
         <slot />
     </Link>
 </template>

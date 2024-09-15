@@ -1,5 +1,4 @@
 <script setup>
-import {Link} from "@inertiajs/vue3";
 import {camelCase} from "lodash";
 
 defineProps({
@@ -12,23 +11,38 @@ defineProps({
         required: true,
     },
 });
+
+const alignment = {
+    left: 'text-left',
+    center: 'text-center',
+    right: 'text-right',
+};
 </script>
 
 <template>
-    <table>
+    <table class="w-full table-auto">
         <thead>
-            <tr>
-                <th v-for="col in columns">{{col.label}}</th>
-            </tr>
+        <tr class="border-b">
+            <th v-for="col in columns"
+                :class="[col.align ? alignment[col.align] : alignment.left]"
+                class="px-2">
+                {{ col.label }}
+            </th>
+        </tr>
         </thead>
-        <tbody>
-            <tr v-for="row in data">
-                <td v-for="col in columns">
-                    <slot :name="camelCase(col.field) + 'Col'" :rowData="row">
-                        {{row[col.field]}}
-                    </slot>
-                </td>
-            </tr>
+        <tbody class="divide-y">
+        <tr v-for="(row, key) in data"
+            class="hover:bg-gray-50">
+            <td v-for="col in columns"
+                :class="col.align ? alignment[col.align] : alignment.left"
+                class="p-2">
+                <slot :index="key"
+                      :name="camelCase(col.field) + 'Col'"
+                      :rowData="row">
+                    {{ row[col.field] }}
+                </slot>
+            </td>
+        </tr>
         </tbody>
     </table>
 </template>
