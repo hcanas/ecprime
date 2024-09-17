@@ -1,8 +1,6 @@
 <script setup>
 import {Head, Link, router} from "@inertiajs/vue3";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import {onMounted} from "vue";
-import {useFormatter} from "@/Composables/formatter.js";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import BaseLayout from "@/Layouts/BaseLayout.vue";
 
@@ -13,16 +11,9 @@ defineProps({
     },
 });
 
-const {formatNumber} = useFormatter();
-
 function redirectToProducts() {
     router.visit(route('shop'));
 }
-
-onMounted(() => {
-    axios.get(route('best_sellers'))
-        .then(response => bestSellers.value = response.data);
-});
 </script>
 
 <template>
