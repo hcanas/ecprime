@@ -24,7 +24,7 @@ Route::post('contact_us', [ContactUsController::class, 'store'])->name('contact_
 
 Route::get('cart', CartController::class)->name('cart');
 
-Route::get('product/{id}', ProductProfileController::class)->name('product.profile');
+Route::get('product/{product}', ProductProfileController::class)->name('product.profile');
 Route::post('quotations', [QuotationController::class, 'store'])->name('quotations.store')
     ->middleware(HandlePrecognitiveRequests::class);
 

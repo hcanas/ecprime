@@ -47,8 +47,8 @@ onMounted(() => {
 
         <div class="grid grid-cols-5 gap-6">
             <Link v-for="product in products.data"
-                  :href="route('product.profile', { id: product.id })"
-                  class="relative flex flex-col items-center hover:text-primary-500 p-3 border hover:border-primary-500 rounded-md shadow transition ease-in-out">
+                  :href="route('product.profile', { product: product.id })"
+                  class="relative flex flex-col items-center hover:text-primary-500 p-3 border hover:border-primary-500 dark:text-white dark:hover:text-primary-500 dark:bg-neutral-900 dark:border-neutral-800 rounded-md shadow transition ease-in-out">
                 <img :src="product.image ? `/storage/images/${product.image}` : '/images/placeholder.png'"
                      class="w-[200px] h-[200px]" />
                 <span class="text-center">{{ product.name }}</span>
