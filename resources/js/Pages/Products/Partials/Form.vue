@@ -53,7 +53,7 @@ function discardChanges() {
 }
 
 function submit() {
-    if (!form.isDirty) {
+    if (props.product && !form.isDirty) {
         alert('There are no changes.');
         return;
     }
