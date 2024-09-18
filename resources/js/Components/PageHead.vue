@@ -12,7 +12,7 @@ defineProps({
 <template>
     <div class="flex items-end justify-between mb-6">
         <Head :title="title" />
-        <h1 class="flex-shrink-0 text-neutral-700 font-bold">{{ title }}</h1>
+        <h1 class="flex-shrink-0 font-bold">{{ title }}</h1>
         <div>
             <slot />
         </div>

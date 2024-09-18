@@ -116,7 +116,7 @@ function cancelQuotation() {
                 <CustomerInformation :customer="quotation.customer" />
                 <TrackingDetails :quotation="quotation" />
 
-                <div class="flex flex-col space-y-6 border border-green-200 rounded-md p-3">
+                <div class="flex flex-col space-y-6 border border-green-200 dark:border-neutral-800 dark:bg-neutral-800 rounded-md shadow p-3">
                     <div class="flex flex-col text-sm">
                         <p class="font-medium">Purchase Order</p>
                         <p class="text-neutral-500">Creating a purchase order will lock this record to prevent further modification. This action is irreversible.</p>
@@ -129,7 +129,7 @@ function cancelQuotation() {
                           class="text-sm text-red-500 italic">*** Send the quotation first to the customer for confirmation.</span>
                 </div>
 
-                <div class="flex flex-col space-y-6 border border-red-200 rounded-md p-3">
+                <div class="flex flex-col space-y-6 border border-red-200 dark:border-neutral-800 dark:bg-neutral-800 rounded-md shadow p-3">
                     <div class="flex flex-col text-sm">
                         <p class="font-medium">Cancellation</p>
                         <p class="text-neutral-500">Cancelling this quotation will lock the record to prevent further modification. This action is irreversible.</p>

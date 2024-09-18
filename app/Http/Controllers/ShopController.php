@@ -30,7 +30,7 @@ class ShopController extends Controller
         });
 
         return Inertia::render('Shop', [
-            'products' => $data->paginate($request->get('per_page', 20))
+            'products' => $data->paginate($request->get('per_page', 48))
                 ->withQueryString()
                 ->through(fn ($product) => [
                     'id' => $product->id,

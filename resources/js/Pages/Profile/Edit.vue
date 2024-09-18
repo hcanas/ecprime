@@ -35,19 +35,19 @@ const roleTagColors = {
         <div class="grid grid-cols-3 gap-6">
             <div class="flex flex-col space-y-6">
                 <Card title="General Information">
-                    <div class="flex flex-col space-y-1">
-                        <div class="flex items-center">
+                    <div class="flex flex-col space-y-3">
+                        <p class="flex items-center">
                             <span class="w-16 text-xs text-neutral-500 uppercase font-medium">Name</span>
                             <span>{{ user.name }}</span>
-                        </div>
-                        <div class="flex items-center">
+                        </p>
+                        <p class="flex items-center">
                             <span class="w-16 text-xs text-neutral-500 uppercase font-medium">Email</span>
                             <span>{{ user.email }}</span>
-                        </div>
-                        <div class="flex items-center">
+                        </p>
+                        <p class="flex items-center">
                             <span class="w-16 text-xs text-neutral-500 uppercase font-medium">Role</span>
                             <Tag :class="roleTagColors[user.role]">{{ user.role }}</Tag>
-                        </div>
+                        </p>
                     </div>
                 </Card>
 
@@ -56,8 +56,6 @@ const roleTagColors = {
 
             <Card title="Activity Log" class="col-span-2">
                 <TextFilter />
-
-                <p class="mt-3 text-sm text-neutral-500">Showing up to 15 records of the most recent activities.</p>
 
                 <div class="flex flex-col space-y-3 mt-3">
                     <p v-for="activity in activities" class="flex flex-col">

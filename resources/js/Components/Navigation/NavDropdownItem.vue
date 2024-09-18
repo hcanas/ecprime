@@ -21,7 +21,7 @@ defineProps({
         <Link :as="as"
               :href="href"
               :method="method"
-              class="text-sm text-neutral-500 hover:text-primary-500">
+              class="text-sm font-medium text-neutral-400 hover:text-primary-500 dark:hover:text-primary-400">
             <slot />
         </Link>
     </MenuItem>

@@ -23,21 +23,21 @@ const statusTagColors = {
     <Card class="h-max"
           title="Tracking Details">
         <div class="flex flex-col space-y-3">
-            <div class="flex flex-col">
+            <p class="flex flex-col">
                 <span class="text-xs text-neutral-500 uppercase font-medium">Reference Number</span>
                 <span>{{ quotation.reference_number }}</span>
-            </div>
-            <div v-if="quotation.purchase_order"
+            </p>
+            <p v-if="quotation.purchase_order"
                  class="flex flex-col">
                 <span class="text-xs text-neutral-500 uppercase font-medium">Purchase Order Reference Number</span>
                 <Link :href="route(quotation.purchase_order.status === 'pending' ? 'purchase_orders.edit' : 'purchase_orders.show', { purchase_order: quotation.purchase_order.id })"
                       class="text-blue-500 hover:underline">{{ quotation.purchase_order.reference_number }}
                 </Link>
-            </div>
-            <div class="flex flex-col">
+            </p>
+            <p class="flex flex-col">
                 <span class="text-xs text-neutral-500 uppercase font-medium">Status</span>
                 <Tag :class="statusTagColors[quotation.status]">{{ quotation.status }}</Tag>
-            </div>
+            </p>
         </div>
     </Card>
 </template>

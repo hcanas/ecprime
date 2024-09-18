@@ -7,7 +7,7 @@ defineProps({
 </script>
 
 <template>
-    <div class="flex flex-col border rounded-md shadow">
+    <div class="flex flex-col border dark:bg-neutral-800 dark:border-neutral-800 rounded-md shadow">
         <div v-if="title"
              class="p-3">
             <h4 class="font-bold tracking-wide">

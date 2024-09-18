@@ -7,7 +7,7 @@ import {ChevronDownIcon} from "@heroicons/vue/16/solid/index.js";
     <div class="relative">
         <Menu>
             <MenuButton
-                class="text-neutral-500 hover:text-primary-500 font-medium transition ease-in-out"
+                class="text-sm text-neutral-400 hover:text-primary-500 dark:hover:text-primary-400 font-medium transition ease-in-out"
             >
                 <div class="flex items-center">
                     <span>
@@ -29,7 +29,7 @@ import {ChevronDownIcon} from "@heroicons/vue/16/solid/index.js";
                 leave-to-class="transform scale-95 opacity-0"
             >
                 <MenuItems
-                    class="absolute right-0 mt-2 z-50 w-36 flex flex-col origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
+                    class="absolute right-0 mt-2 z-50 w-36 flex flex-col origin-top-right divide-y divide-gray-100 dark:divide-neutral-700 dark:bg-neutral-800 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
                 >
                     <slot name="items" />
                 </MenuItems>

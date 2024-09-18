@@ -79,11 +79,11 @@ const totalAmount = reduce(props.purchase_order.items, (t, item) => {
 
                 <div class="grid grid-cols-2 gap-6">
                     <Card title="Payment Details">
-                        <span class="text-sm italic">{{ purchase_order.payment_details ?? 'Not Specified' }}</span>
+                        <p class="text-sm italic">{{ purchase_order.payment_details ?? 'Not Specified' }}</p>
                     </Card>
 
                     <Card title="Delivery Date">
-                        <span class="text-sm italic">{{ purchase_order.delivery_date ?? 'Not Specified' }}</span>
+                        <p class="text-sm italic">{{ purchase_order.delivery_date ?? 'Not Specified' }}</p>
                     </Card>
                 </div>
 

@@ -45,14 +45,14 @@ onMounted(() => {
             </div>
         </PageHead>
 
-        <div class="grid grid-cols-5 gap-6">
+        <div class="grid grid-cols-8 gap-6">
             <Link v-for="product in products.data"
                   :href="route('product.profile', { product: product.id })"
-                  class="relative flex flex-col items-center hover:text-primary-500 p-3 border hover:border-primary-500 dark:text-white dark:hover:text-primary-500 dark:bg-neutral-900 dark:border-neutral-800 rounded-md shadow transition ease-in-out">
+                  class="relative flex flex-col items-center hover:text-primary-500 p-3 border hover:border-primary-500 dark:text-white dark:hover:text-primary-400 dark:bg-neutral-800 dark:border-neutral-800 rounded-md shadow transition ease-in-out">
                 <img :src="product.image ? `/storage/images/${product.image}` : '/images/placeholder.png'"
-                     class="w-[200px] h-[200px]" />
-                <span class="text-center">{{ product.name }}</span>
-                <ShoppingCartIcon v-if="itemExists(product.id)" class="size-5 text-primary-500 absolute top-2 left-2" />
+                     class="w-[160px] h-[160px]" />
+                <span class="w-full text-sm text-center line-clamp-2" :title="product.name">{{ product.name }}</span>
+                <ShoppingCartIcon v-if="itemExists(product.id)" class="size-5 text-primary-500 absolute top-1 left-1" />
             </Link>
         </div>
 

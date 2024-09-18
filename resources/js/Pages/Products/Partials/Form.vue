@@ -84,7 +84,7 @@ watch(() => form.description, () => {
                          class="w-[200px] h-[200px]" />
                     <span class="text-sm italic text-neutral-500">Images will be resized to 640x640.</span>
                     <InputLabel for="file">
-                        <div class="flex items-center space-x-1 px-3 py-2 hover:text-white bg-neutral-100 hover:bg-primary-500 hover:cursor-pointer border rounded-md transition ease-in-out">
+                        <div class="flex items-center space-x-1 px-3 py-2 hover:text-white bg-neutral-100 hover:bg-primary-500 dark:bg-primary-500 dark:hover:bg-primary-400 cursor-pointer rounded-md transition ease-in-out">
                             <PhotoIcon class="size-5" />
                             <span>{{ product?.image ? 'Replace Photo' : 'Upload Photo' }}</span>
                         </div>

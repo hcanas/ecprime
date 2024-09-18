@@ -10,10 +10,10 @@ import BaseLayout from "@/Layouts/BaseLayout.vue";
 
             <div class="flex flex-col md:flex-row items-center justify-center space-x-12">
                 <div class="flex flex-col space-y-6">
-                    <div class="flex flex-col items-center md:items-start">
-                        <h1 class="uppercase font-bold leading-3">About</h1>
-                        <h1 class="uppercase text-primary-500 font-bold leading-tight">EC PRIME</h1>
-                        <h1 class="uppercase font-medium leading-3">Corporation</h1>
+                    <div class="flex flex-col justify-center">
+                        <h1 class="uppercase font-bold dark:text-neutral-100 leading-3">About</h1>
+                        <h1 class="uppercase text-primary-500 dark:text-primary-400 font-bold leading-relaxed">EC PRIME</h1>
+                        <h1 class="uppercase font-medium dark:text-neutral-100 leading-3">Corporation</h1>
                     </div>
                     <div class="flex flex-col">
                         <h3 class="font-medium italic">Mission</h3>

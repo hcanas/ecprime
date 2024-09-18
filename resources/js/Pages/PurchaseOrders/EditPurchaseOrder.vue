@@ -87,7 +87,7 @@ function cancelPurchaseOrder() {
 
                 <TrackingDetails :purchaseOrder="purchase_order" />
 
-                <div class="flex flex-col space-y-6 border border-green-200 rounded-md p-3 shadow">
+                <div class="flex flex-col space-y-6 border border-green-200 dark:border-neutral-800 dark:bg-neutral-800 rounded-md p-3 shadow">
                     <div class="flex flex-col text-sm">
                         <p class="font-medium">Delivery Confirmation</p>
                         <p class="text-neutral-500">Confirming delivery will lock this record to prevent further modification. This action is irreversible.</p>
@@ -100,7 +100,7 @@ function cancelPurchaseOrder() {
                           class="text-red-500 text-sm italic">*** Payment details and delivery date must be set first.</span>
                 </div>
 
-                <div class="flex flex-col space-y-6 border border-red-200 rounded-md p-3 shadow">
+                <div class="flex flex-col space-y-6 border border-red-200 dark:border-neutral-800 dark:bg-neutral-800 rounded-md p-3 shadow">
                     <div class="flex flex-col text-sm">
                         <p class="font-medium">Cancellation</p>
                         <p class="text-neutral-500">Cancelling this purchase order will lock the record to prevent further modification. This action is irreversible.</p>

@@ -5,6 +5,7 @@ import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import NavDropdown from "@/Components/Navigation/NavDropdown.vue";
 import NavDropdownItem from "@/Components/Navigation/NavDropdownItem.vue";
 import {ArrowLeftStartOnRectangleIcon, ShoppingCartIcon, UserCircleIcon,} from "@heroicons/vue/16/solid/index.js";
+import DarkModeToggle from "@/Components/DarkModeToggle.vue";
 
 const {items} = useCart();
 </script>
@@ -15,8 +16,8 @@ const {items} = useCart();
             <div class="flex items-center space-x-1">
                 <ApplicationLogo class="size-10" />
                 <div class="flex flex-col">
-                    <span class="text-gray-500 font-bold uppercase leading-tight">EC Prime</span>
-                    <span class="text-gray-700 font-bold uppercase leading-tight">Corporation</span>
+                    <span class="text-primary-500 dark:text-primary-400 font-bold uppercase leading-tight">EC Prime</span>
+                    <span class="text-neutral-700 dark:text-white font-bold uppercase leading-tight">Corporation</span>
                 </div>
             </div>
 
@@ -52,16 +53,18 @@ const {items} = useCart();
                 </NavLink>
             </div>
 
-            <div class="relative flex items-center">
+            <div class="relative flex items-center space-x-6">
                 <NavLink :href="route('cart')"
                          class="text-primary-600 hover:text-primary-500"
                          title="Cart">
                     <div class="relative">
                         <ShoppingCartIcon class="size-5" />
                         <span v-if="items.length"
-                              class="absolute -top-3 -right-3 h-6 w-5 text-center">{{ items.length }}</span>
+                              class="absolute -top-3 -right-4 h-6 w-6 text-center text-xs leading-loose text-white bg-primary-500 rounded-full">{{ items.length }}</span>
                     </div>
                 </NavLink>
+
+                <DarkModeToggle />
 
                 <NavDropdown v-if="$page.props.auth.user">
                     <template #buttonText>
@@ -70,7 +73,7 @@ const {items} = useCart();
 
                     <template #items>
                         <NavDropdownItem :href="route('profile.edit')">
-                            <div class="flex items-center space-x-1">
+                            <div class="flex items-center space-x-1 py-1">
                                 <UserCircleIcon class="size-4" />
                                 <span>Profile</span>
                             </div>
@@ -78,7 +81,7 @@ const {items} = useCart();
                         <NavDropdownItem :href="route('logout')"
                                          as="button"
                                          method="post">
-                            <div class="flex items-center space-x-1">
+                            <div class="flex items-center space-x-1 py-1">
                                 <ArrowLeftStartOnRectangleIcon class="size-4" />
                                 <span>Logout</span>
                             </div>
@@ -92,7 +95,7 @@ const {items} = useCart();
             </div>
         </nav>
 
-        <main class="pb-6">
+        <main class="pb-3">
             <slot />
         </main>
     </div>

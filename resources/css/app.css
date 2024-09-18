@@ -23,6 +23,12 @@
         @apply text-xs
     }
 
+    p,
+    h1, h2, h3, h4, h5, h6,
+    th, td,
+    input, textarea {
+        @apply text-neutral-950/95 dark:text-neutral-100
+    }
     /* Chrome, Safari, Edge, Opera */
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {

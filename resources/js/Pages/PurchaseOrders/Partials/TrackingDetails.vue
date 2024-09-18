@@ -21,20 +21,20 @@ const statusTagColors = {
     <Card class="h-max"
           title="Tracking Details">
         <div class="flex flex-col space-y-3">
-            <div class="flex flex-col">
+            <p class="flex flex-col">
                 <span class="text-xs text-neutral-500 uppercase font-medium">Reference Number</span>
                 <span>{{ purchaseOrder.reference_number }}</span>
-            </div>
-            <div class="flex flex-col">
+            </p>
+            <p class="flex flex-col">
                 <span class="text-xs text-neutral-500 uppercase font-medium">Quotation Reference Number</span>
                 <Link :href="route('quotations.show', { quotation: purchaseOrder.quotation_id })"
                       class="text-blue-500 hover:underline">{{ purchaseOrder.quotation_reference_number }}
                 </Link>
-            </div>
-            <div class="flex flex-col">
+            </p>
+            <p class="flex flex-col">
                 <span class="text-xs text-neutral-500 uppercase font-medium">Status</span>
                 <Tag :class="statusTagColors[purchaseOrder.status]">{{ purchaseOrder.status }}</Tag>
-            </div>
+            </p>
         </div>
     </Card>
 </template>

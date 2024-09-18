@@ -84,7 +84,7 @@ class Product extends Model
 
     public function measurementUnit(): BelongsTo
     {
-        return $this->belongsTo(MeasurementUnit::class);
+        return $this->belongsTo(MeasurementUnit::class, 'measurement_unit_id');
     }
 
     public function category(): BelongsTo

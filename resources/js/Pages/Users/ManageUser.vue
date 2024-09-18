@@ -45,6 +45,11 @@ const statusTagColors = {
 };
 
 function updateRole() {
+    if (!roleForm.isDirty) {
+        alert('There are no changes.');
+        return;
+    }
+
     roleForm.put(route('users.update', {user: props.user.id}));
 }
 
@@ -71,23 +76,23 @@ function deleteAccount() {
             <div class="flex flex-col">
                 <Card class="mb-3"
                       title="Details">
-                    <div class="flex flex-col space-y-2">
-                        <div class="flex items-center">
-                            <span class="w-16 text-xs text-neutral-600 uppercase font-medium">Name</span>
-                            <span>{{ user.name }}</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="w-16 text-xs text-neutral-600 uppercase font-medium">Email</span>
-                            <span>{{ user.email }}</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="w-16 text-xs text-neutral-600 uppercase font-medium">Role</span>
+                    <div class="flex flex-col space-y-3">
+                        <p class="flex items-center">
+                            <span class="w-16 text-xs text-neutral-600 dark:text-neutral-400 uppercase font-medium">Name</span>
+                            <span class="dark:text-white">{{ user.name }}</span>
+                        </p>
+                        <p class="flex items-center">
+                            <span class="w-16 text-xs text-neutral-600 dark:text-neutral-400 uppercase font-medium">Email</span>
+                            <span class="dark:text-white">{{ user.email }}</span>
+                        </p>
+                        <p class="flex items-center">
+                            <span class="w-16 text-xs text-neutral-600 dark:text-neutral-400 uppercase font-medium">Role</span>
                             <Tag :class="roleTagColors[user.role]">{{ user.role }}</Tag>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="w-16 text-xs text-neutral-600 uppercase font-medium">Status</span>
+                        </p>
+                        <p class="flex items-center">
+                            <span class="w-16 text-xs text-neutral-600 dark:text-neutral-400 uppercase font-medium">Status</span>
                             <Tag :class="statusTagColors[user.status]">{{ user.status }}</Tag>
-                        </div>
+                        </p>
 
                         <LastModifiedBy :dateTime="user.updated_at"
                                         :user="user.last_modified_by" />
@@ -109,9 +114,9 @@ function deleteAccount() {
                       title="Manage Access">
                     <div v-if="user.status === 'active'"
                          class="flex items-center justify-between space-x-6">
-                        <div class="flex flex-col text-sm">
-                            <p class="font-medium">Block User</p>
-                            <p class="text-neutral-500">Restricting this user will block their access to the system.</p>
+                        <div class="flex flex-col space-y-1 text-sm">
+                            <p class="dark:text-white font-medium">Block User</p>
+                            <p class="text-neutral-500 dark:text-neutral-400">Restricting this user will block their access to the system.</p>
                         </div>
                         <DangerButton class="flex-shrink-0"
                                       @click="updateStatus('restricted')">Restrict Access
@@ -119,9 +124,9 @@ function deleteAccount() {
                     </div>
                     <div v-else-if="user.status === 'restricted'"
                          class="flex items-center justify-between space-x-6">
-                        <div class="flex flex-col text-sm">
-                            <p class="font-medium">Unblock User</p>
-                            <p class="text-neutral-500">Unblocking this user with restore their access to the system.</p>
+                        <div class="flex flex-col space-y-1 text-sm">
+                            <p class="dark:text-white font-medium">Unblock User</p>
+                            <p class="text-neutral-500 dark:text-neutral-400">Unblocking this user with restore their access to the system.</p>
                         </div>
                         <SuccessButton class="flex-shrink-0"
                                        @click="updateStatus('active')">Restore Access
@@ -132,10 +137,10 @@ function deleteAccount() {
                 <Card class="border-red-300 my-3"
                       title="Danger Zone">
                     <div class="flex items-center justify-between space-x-6">
-                        <div class="flex flex-col text-sm">
+                        <div class="flex flex-col space-y-1 text-sm">
                             <p class="font-medium">Account Deletion</p>
-                            <p class="text-neutral-500">Deleting this account will permanently remove it from the database. This action is irreversible.</p>
-                            <p class="text-neutral-500 italic">*** User accounts with linked records can not be deleted.</p>
+                            <p class="text-neutral-500 dark:text-neutral-400">Deleting this account will permanently remove it from the database. This action is irreversible.</p>
+                            <p class="text-neutral-500 dark:text-neutral-400 italic">*** User accounts with linked records can not be deleted.</p>
                         </div>
                         <DangerButton class="flex-shrink-0"
                                       @click="deleteAccount">Delete Account
@@ -146,8 +151,6 @@ function deleteAccount() {
 
             <Card title="Activity Log" class="col-span-2">
                 <TextFilter />
-
-                <p class="mt-3 text-sm text-neutral-500">Showing up to 15 records of the most recent activities.</p>
 
                 <div class="flex flex-col space-y-3 mt-3">
                     <p v-for="activity in activities" class="flex flex-col">

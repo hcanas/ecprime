@@ -33,7 +33,7 @@ function redirectToProducts() {
                         <h1 class="uppercase text-3xl md:text-5xl font-medium leading-3">Better Together!</h1>
                     </div>
 
-                    <p class="text-lg font-medium mt-12">Great opportunities don't wait!</p>
+                    <p class="dark:text-white font-medium mt-12">Great opportunities don't wait!</p>
                     <PrimaryButton class="w-fit mt-3"
                                    @click="redirectToProducts">Request Quotation Now
                     </PrimaryButton>
@@ -41,19 +41,17 @@ function redirectToProducts() {
             </div>
 
             <div class="flex flex-col items-center space-y-3 mt-12 md:mt-0">
-                <h3 class="text-2xl font-bold">Trending Products</h3>
-                <div class="grid grid-cols-2 md:grid-cols-8 gap-6 justify-center">
+                <h2 class="dark:text-white font-bold">Trending Products</h2>
+                <div class="grid grid-cols-2 md:grid-cols-8 gap-3 justify-center">
                     <Link v-for="product in trending_products"
                           :href="route('product.profile', { product: product.id })"
-                          class="hover:text-primary-500 border hover:border-primary-500 dark:text-white dark:hover:text-primary-500 dark:bg-neutral-900 dark:border-neutral-800 dark:hover:border-primary-500 rounded-md shadow transition ease-in-out">
+                          class="group border dark:bg-neutral-800 dark:border-neutral-800 rounded-md shadow transition ease-in-out p-2">
                         <div class="w-full p-1 rounded-t">
                             <img :src="product.image ? `/storage/images/${product.image}` : '/images/placeholder.png'"
                                  class="mx-auto rounded w-[100px] h-[100px]" />
                         </div>
-                        <div class="flex flex-col items-center space-y-1 px-4 py-2">
-                            <p :title="product.name"
-                               class="w-full text-center text-xs">{{ product.name }}</p>
-                        </div>
+                        <p :title="product.name"
+                           class="text-center text-xs group-hover:text-primary-500 dark:group-hover:text-primary-400 text-wrap line-clamp-3">{{ product.name }}</p>
                     </Link>
                 </div>
                 <SecondaryButton class="w-fit"

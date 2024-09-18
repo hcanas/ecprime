@@ -29,8 +29,8 @@ const chartData = {
     datasets: [
         {
             label: 'Revenue From Delivered Purchase Orders',
-            backgroundColor: '#13dc4d',
-            borderColor: '#13dc4d',
+            backgroundColor: '#23c050',
+            borderColor: '#23c050',
             borderWidth: 2,
             data: getChartData(),
         }
@@ -132,46 +132,45 @@ onBeforeMount(() => {
                 <OnlyFilter :options="monthOptions"
                             field="month"
                             label="Month" />
-                <OnlyFilter :options="yearOptions"
+                <OnlyFilter :includeAll="false"
+                            :options="yearOptions"
                             field="year"
-                            label="Year"
-                            :includeAll="false" />
+                            label="Year" />
             </div>
         </PageHead>
 
-        <div class="mt-6 md:mt-12 flex flex-col space-y-6 md:space-y-12 px-6">
+        <div class="mt-6 md:mt-12 flex flex-col space-y-6 md:space-y-12">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-y-1 md:gap-y-0 md:gap-x-6">
-                <div class="flex flex-col items-end rounded p-3 bg-cyan-500">
-                    <h3 class="text-white">{{ formatNumber(sumBy(purchase_orders, 'pending_delivery_count')) }} Pending Delivery Orders</h3>
-                    <p class="text-lg text-white font-medium">{{ formatCurrency(sumBy(purchase_orders, x => parseFloat(x.pending_delivery_amount))) }}</p>
+                <div class="flex flex-col items-end rounded p-3 bg-cyan-600 dark:bg-neutral-800">
+                    <h3 class="text-white dark:text-neutral-400">{{ formatNumber(sumBy(purchase_orders, 'pending_delivery_count')) }} Pending Delivery Orders</h3>
+                    <p class="text-lg text-white dark:text-cyan-500 font-medium">{{ formatCurrency(sumBy(purchase_orders, x => parseFloat(x.pending_delivery_amount))) }}</p>
                 </div>
-                <div class="flex flex-col items-end rounded p-3 bg-green-500">
-                    <h3 class="text-white">{{ formatNumber(sumBy(purchase_orders, 'delivered_count')) }} Delivered Orders</h3>
-                    <p class="text-lg text-white font-medium">{{ formatCurrency(sumBy(purchase_orders, x => parseFloat(x.delivered_amount))) }}</p>
+                <div class="flex flex-col items-end rounded p-3 bg-green-600 dark:bg-neutral-800">
+                    <h3 class="text-white dark:text-neutral-400">{{ formatNumber(sumBy(purchase_orders, 'delivered_count')) }} Delivered Orders</h3>
+                    <p class="text-lg text-white dark:text-green-500 font-medium">{{ formatCurrency(sumBy(purchase_orders, x => parseFloat(x.delivered_amount))) }}</p>
                 </div>
-                <div class="flex flex-col items-end rounded p-3 bg-red-500">
-                    <h3 class="text-white">{{ formatNumber(sumBy(purchase_orders, 'cancelled_count')) }} Delivered Orders</h3>
-                    <p class="text-lg text-white font-medium">{{ formatCurrency(sumBy(purchase_orders, x => parseFloat(x.cancelled_amount))) }}</p>
+                <div class="flex flex-col items-end rounded p-3 bg-red-600 dark:bg-neutral-800">
+                    <h3 class="text-white dark:text-neutral-400">{{ formatNumber(sumBy(purchase_orders, 'cancelled_count')) }} Delivered Orders</h3>
+                    <p class="text-lg text-white dark:text-red-500 font-medium">{{ formatCurrency(sumBy(purchase_orders, x => parseFloat(x.cancelled_amount))) }}</p>
                 </div>
             </div>
 
-            <LineChart :chartData="chartData" :options="chartOptions" />
+            <LineChart :chartData="chartData"
+                       :options="chartOptions" />
 
             <div class="flex flex-col space-y-6">
                 <div class="col-span-2 flex flex-col space-y-3">
                     <h3 class="font-medium">Trending Products</h3>
-                    <h5 class="text-neutral-500 font-medium">Last 30 days</h5>
+                    <h5 class="text-neutral-400 dark:text-neutral-500 font-medium">Last 30 days</h5>
                     <div class="grid grid-cols-2 md:grid-cols-8 gap-6 justify-center">
                         <div v-for="product in trending_products"
-                              class="hover:text-primary-500 border hover:border-primary-500 rounded-md shadow transition ease-in-out">
+                             class="group dark:bg-neutral-800 p-2 rounded-md shadow transition ease-in-out">
                             <div class="w-full p-1 rounded-t">
                                 <img :src="product.image ? `/storage/images/${product.image}` : '/images/placeholder.png'"
                                      class="mx-auto rounded w-[100px] h-[100px]" />
                             </div>
-                            <div class="flex flex-col items-center space-y-1 px-4 py-2">
-                                <p :title="product.name"
-                                   class="w-full text-center">{{ product.name }}</p>
-                            </div>
+                            <p :title="product.name"
+                               class="text-xs text-center group-hover:text-primary-500 dark:group-hover:text-primary-400 line-clamp-2">{{ product.name }}</p>
                         </div>
                     </div>
                 </div>
