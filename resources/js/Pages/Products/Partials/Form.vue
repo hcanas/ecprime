@@ -134,7 +134,7 @@ watch(() => form.description, () => {
                         <SuggestionInput v-model="form.measurement_unit"
                                          :src="route('api.measurement_units')"
                                          @change="form.validate('measurement_unit')" />
-                        <InputError :message="form.errors.description" />
+                        <InputError :message="form.errors.measurement_unit" />
                     </div>
                 </div>
             </Card>
