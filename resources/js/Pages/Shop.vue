@@ -38,18 +38,18 @@ onMounted(() => {
 <template>
     <BaseLayout>
         <PageHead title="Products">
-            <div class="flex items-center space-x-1">
+            <template #filters>
                 <TextFilter />
                 <CategoryFilter v-if="categories.length"
                                 :options="categories" />
-            </div>
+            </template>
         </PageHead>
 
-        <div class="grid grid-cols-8 gap-6">
+        <div class="grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 xl:gap-6">
             <Link v-for="product in products.data"
                   :href="route('product.profile', { product: product.id })"
-                  class="relative flex flex-col items-center hover:text-primary-500 p-3 border hover:border-primary-500 dark:text-white dark:hover:text-primary-400 dark:bg-neutral-800 dark:border-neutral-800 rounded-md shadow transition ease-in-out">
-                <img :src="product.image ? `/storage/images/${product.image}` : '/images/placeholder.png'"
+                  class="relative flex flex-col gap-y-1 items-center hover:text-primary-500 p-3 border hover:border-primary-500 dark:text-white dark:hover:text-primary-400 dark:bg-neutral-800 dark:border-neutral-800 rounded-md shadow transition ease-in-out">
+                <img :src="product.image ? `/storage/images/${product.image}` : '/images/placeholder.svg'"
                      class="w-[160px] h-[160px]" />
                 <span class="w-full text-sm text-center line-clamp-2" :title="product.name">{{ product.name }}</span>
                 <ShoppingCartIcon v-if="itemExists(product.id)" class="size-5 text-primary-500 absolute top-1 left-1" />

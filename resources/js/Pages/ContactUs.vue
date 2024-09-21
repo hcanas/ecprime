@@ -34,7 +34,7 @@ watch(() => form.message, () => {
 
 <template>
     <BaseLayout>
-        <section class="w-full md:max-w-7xl md:mx-auto px-3 md:px-0 py-6">
+        <section class="w-full xl:max-w-7xl xl:mx-auto px-3 xl:px-0 py-6">
             <Head title="Contact Us" />
 
             <div class="flex flex-col items-center">
@@ -43,14 +43,14 @@ watch(() => form.message, () => {
                     <h5 class="text-center font-medium italic">For questions or concerns about our services, send us a message and we will respond within 24 hours.</h5>
                 </div>
 
-                <div class="w-full flex flex-col md:flex-row md:space-x-12 mt-6 md:mt-12">
-                    <div class="flex-shrink-0 hidden md:block">
+                <div class="w-full flex flex-col xl:flex-row xl:space-x-12 mt-6 xl:mt-12">
+                    <div class="flex-shrink-0 hidden xl:block">
                         <img class="w-[40rem] rounded"
                              src="/images/contactUs2.jpg" />
                     </div>
                     <form class="flex-grow"
                           @submit.prevent="submit">
-                        <div class="w-full flex flex-col space-y-3 md:px-6 md:px-0">
+                        <div class="w-full flex flex-col space-y-3 xl:px-6 xl:px-0">
                             <FlashMessage />
                             <div class="flex flex-col">
                                 <InputLabel value="Name" />

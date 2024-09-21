@@ -45,7 +45,7 @@ defineProps({
 
 <template>
     <div v-if="totalRecords > perPage"
-         class="w-full md:w-auto flex flex-col md:flex-row items-center justify-between md:space-x-3 md:order-last mt-6">
+         class="w-full md:w-auto flex flex-col gap-y-3 md:gap-y-0 md:flex-row items-center justify-between md:space-x-3 md:order-last mt-3 md:mt-6">
         <p v-if="totalRecords > 1"
            class="order-2 text-sm md:order-first">Showing {{ from }} to {{ to }} of {{ totalRecords }} results</p>
 

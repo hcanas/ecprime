@@ -49,7 +49,7 @@ const statusTagColors = {
 <template>
     <BaseLayout>
         <PageHead title="Users">
-            <div class="flex items-center space-x-1">
+            <template #actions>
                 <ButtonLink v-if="can.create_user"
                             :href="route('users.create')">
                     <div class="flex items-center space-x-1">
@@ -57,18 +57,20 @@ const statusTagColors = {
                         <span>New User</span>
                     </div>
                 </ButtonLink>
+            </template>
+            <template #filters>
                 <TextFilter />
                 <OnlyFilter :options="onlyFilterOptions"
                             field="role"
                             label="Role" />
-            </div>
+            </template>
         </PageHead>
 
         <FlashMessage />
         <CustomTable :columns="columns"
                      :data="users.data">
             <template #emailCol="{ rowData }">
-                <div class="group flex items-center space-x-3">
+                <div class="group flex flex flex-col">
                     <span>{{ rowData.email }}</span>
                     <Link v-if="rowData.id !== $page.props.auth.user.id"
                           :href="route('users.edit', { user: rowData.id })"

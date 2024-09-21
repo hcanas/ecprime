@@ -41,7 +41,7 @@ const onlyFilterOptions = [
 ];
 
 const statusTagColors = {
-    draft: 'text-neutral-600',
+    draft: 'text-indigo-500',
     pending: 'text-yellow-400',
     sent: 'text-cyan-500',
     confirmed: 'text-green-500',
@@ -52,12 +52,12 @@ const statusTagColors = {
 <template>
     <BaseLayout>
         <PageHead title="Quotations">
-            <div class="flex items-center space-x-1">
+            <template #filters>
                 <TextFilter />
                 <OnlyFilter :options="onlyFilterOptions"
                             field="status"
                             label="Status" />
-            </div>
+            </template>
         </PageHead>
 
         <div class="flex flex-col">
@@ -98,11 +98,9 @@ const statusTagColors = {
                 </template>
 
                 <template #itemsCol="{ rowData }">
-                    <div class="flex flex-col items-center space-y-1">
-                        <div class="flex items-center divide-x text-sm">
-                            <span class="text-green-500 pr-3">{{ filter(rowData.items, item => item.status === 'available').length }} available</span>
-                            <span class="text-red-500 pl-3">{{ filter(rowData.items, item => item.status !== 'available').length }} unavailable</span>
-                        </div>
+                    <div class="flex flex-col text-sm">
+                        <span class="text-green-500 pr-3">{{ filter(rowData.items, item => item.status === 'available').length }} available</span>
+                        <span class="text-red-500">{{ filter(rowData.items, item => item.status !== 'available').length }} unavailable</span>
                     </div>
                 </template>
 

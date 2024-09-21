@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -12,6 +13,8 @@ class DashboardController extends Controller
 {
     public function __invoke(Request $request)
     {
+        if (Auth::user()->role === 'affiliate') abort(403);
+
         $purchase_orders = DB::table('purchase_orders', 'PO')
             ->leftJoin('purchase_order_items AS POI', 'POI.purchase_order_id', 'PO.id')
             ->select(DB::raw(

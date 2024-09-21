@@ -32,10 +32,10 @@ const roleTagColors = {
     <BaseLayout>
         <PageHead title="My Profile" />
 
-        <div class="grid grid-cols-3 gap-6">
-            <div class="flex flex-col space-y-6">
+        <div class="flex flex-col xl:grid xl:grid-cols-3 xl:gap-x-6 gap-y-3">
+            <div class="flex flex-col gap-y-6">
                 <Card title="General Information">
-                    <div class="flex flex-col space-y-3">
+                    <div class="flex flex-col gap-y-3">
                         <p class="flex items-center">
                             <span class="w-16 text-xs text-neutral-500 uppercase font-medium">Name</span>
                             <span>{{ user.name }}</span>
@@ -54,10 +54,10 @@ const roleTagColors = {
                 <UpdatePasswordForm />
             </div>
 
-            <Card title="Activity Log" class="col-span-2">
+            <Card v-if="activities.length" title="Activity Log" class="xl:col-span-2">
                 <TextFilter />
 
-                <div class="flex flex-col space-y-3 mt-3">
+                <div class="flex flex-col gap-y-3 mt-3">
                     <p v-for="activity in activities" class="flex flex-col">
                         <span>{{ activity.details }}</span>
                         <span class="text-sm text-neutral-500">{{ formatDateTime(activity.created_at) }}</span>

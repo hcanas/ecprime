@@ -42,18 +42,22 @@ class Product extends Model
         ];
     }
 
-    public function popular(int $count): Collection
+    public function popular(int $count, bool $available_only = false): Collection
     {
-        return DB::table('quotation_items')
+        $query = DB::table('quotation_items')
             ->selectRaw('max(quotation_items.image) AS image, count(quotation_items.id) AS count, quotation_items.name, products.id AS product_id')
             ->leftJoin('products', 'products.name', 'quotation_items.name')
             ->whereRaw('quotation_items.created_at > DATE_SUB(CURDATE(), INTERVAL 30 DAY)')
             ->whereRaw('products.id IS NOT NULL')
-            ->whereRaw('products.status = "available"')
             ->groupBy('quotation_items.name')
             ->orderBy('count', 'desc')
-            ->limit($count ?: 10)
-            ->get();
+            ->limit($count ?: 10);
+
+        if ($available_only) {
+            $query->whereRaw('products.status = "available"');
+        }
+
+        return $query->get();
     }
 
     protected static function booted(): void

@@ -45,29 +45,29 @@ const totalAmount = reduce(props.quotation.items, (t, item) => {
 
         <FlashMessage />
 
-        <div class="grid grid-cols-4 gap-6">
-            <div class="flex flex-col space-y-6">
+        <div class="flex flex-col xl:grid xl:grid-cols-4 xl:gap-x-6 gap-y-3">
+            <div class="flex flex-col md:grid md:grid-cols-2 md:gap-x-6 xl:flex xl:flex-col gap-y-6">
                 <CustomerInformation :customer="quotation.customer" />
                 <TrackingDetails :quotation="quotation" />
             </div>
 
-            <div class="col-span-3 flex flex-col space-y-6">
+            <div class="xl:col-span-3 flex flex-col gap-y-6">
                 <Card class="h-max"
                       title="Items">
                     <CustomTable :columns="columns"
                                  :data="itemsDraft">
                         <template #nameCol="{ rowData, index }">
                             <div class="flex flex-col">
-                                <img :src="rowData.image ? `/storage/images/${rowData.image}` : '/images/placeholder.png'"
+                                <img :src="rowData.image ? `/storage/images/${rowData.image}` : '/images/placeholder.svg'"
                                      alt="Image"
-                                     class="size-10" />
+                                     class="size-60 xl:size-10" />
                                 <span>{{ rowData.name }}</span>
                                 <span class="text-sm">{{ rowData.description }}</span>
                             </div>
                         </template>
 
                         <template #brandCol="{ rowData, index }">
-                            <span>{{ rowData.brand }}</span>
+                            <span>{{ rowData.brand ?? 'No Brand' }}</span>
                         </template>
 
                         <template #quantityCol="{ rowData, index }">
@@ -83,7 +83,7 @@ const totalAmount = reduce(props.quotation.items, (t, item) => {
                         </template>
                     </CustomTable>
 
-                    <p class="text-right font-medium border-t pt-3">{{ formatCurrency(totalAmount) }}</p>
+                    <p class="text-right font-medium pt-3">{{ formatCurrency(totalAmount) }}</p>
                 </Card>
 
                 <LastModifiedBy :dateTime="quotation.updated_at"

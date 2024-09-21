@@ -27,7 +27,7 @@ class ProductController extends Controller
             $filters = [];
 
             if (Auth::user()->role === 'affiliate') {
-                $filters[] = 'status = unavailable';
+                $filters[] = 'status = available';
             } elseif ($request->get('status')) {
                 $filters[] = 'status = '.$request->get('status');
             }

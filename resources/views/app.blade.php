@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="w-full h-full">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,7 +15,7 @@
         @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
         @inertiaHead
     </head>
-    <body class="w-full h-full overflow-x-hidden bg-white dark:bg-neutral-950/95 transition ease-in-out">
+    <body class="overflow-x-hidden bg-white dark:bg-neutral-950 transition ease-in-out">
         @inertia
     </body>
 </html>

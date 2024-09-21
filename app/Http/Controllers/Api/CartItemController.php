@@ -7,6 +7,7 @@ use App\Models\MeasurementUnit;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CartItemController extends Controller
 {
@@ -20,7 +21,11 @@ class CartItemController extends Controller
                     ->limit(1)
                 ])
                 ->whereIn('id', $ids)
-                ->get();
+                ->get()
+                ->map(fn ($product) => [
+                    ...$product->toArray(),
+                    'image' => Storage::exists('public/images/'.$product->image) ? $product->image : null,
+                ]);
         }
 
         return response()->json($items ?? []);

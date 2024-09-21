@@ -33,6 +33,15 @@ class Quotation extends Model
 
     protected static function booted(): void
     {
+        static::created(function (self $quotation) {
+            if (Auth::check()) {
+                UserActivity::create([
+                    'user_id' => Auth::user()->id,
+                    'details' => 'Created quotation request with reference number ' . $quotation->reference_number . '.',
+                ]);
+            }
+        });
+
         static::updating(function (self $quotation) {
             $quotation->setAttribute('last_modified_by_id', Auth::user()->id);
         });

@@ -128,19 +128,22 @@ onBeforeMount(() => {
 <template>
     <BaseLayout>
         <PageHead title="Dashboard">
-            <div class="flex items-center space-x-3 px-6 md:px-0">
-                <OnlyFilter :options="monthOptions"
-                            field="month"
-                            label="Month" />
-                <OnlyFilter :includeAll="false"
-                            :options="yearOptions"
-                            field="year"
-                            label="Year" />
-            </div>
+            <template #filters>
+                <div class="grid grid-cols-2 gap-x-1">
+
+                    <OnlyFilter :options="monthOptions"
+                                field="month"
+                                label="Month" />
+                    <OnlyFilter :includeAll="false"
+                                :options="yearOptions"
+                                field="year"
+                                label="Year" />
+                </div>
+            </template>
         </PageHead>
 
-        <div class="mt-6 md:mt-12 flex flex-col space-y-6 md:space-y-12">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-y-1 md:gap-y-0 md:gap-x-6">
+        <div class="mt-6 xl:mt-12 flex flex-col gap-y-6 xl:gap-y-12">
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-y-1 xl:gap-y-0 xl:gap-x-6">
                 <div class="flex flex-col items-end rounded p-3 bg-cyan-600 dark:bg-neutral-800">
                     <h3 class="text-white dark:text-neutral-400">{{ formatNumber(sumBy(purchase_orders, 'pending_delivery_count')) }} Pending Delivery Orders</h3>
                     <p class="text-lg text-white dark:text-cyan-500 font-medium">{{ formatCurrency(sumBy(purchase_orders, x => parseFloat(x.pending_delivery_amount))) }}</p>
@@ -150,7 +153,7 @@ onBeforeMount(() => {
                     <p class="text-lg text-white dark:text-green-500 font-medium">{{ formatCurrency(sumBy(purchase_orders, x => parseFloat(x.delivered_amount))) }}</p>
                 </div>
                 <div class="flex flex-col items-end rounded p-3 bg-red-600 dark:bg-neutral-800">
-                    <h3 class="text-white dark:text-neutral-400">{{ formatNumber(sumBy(purchase_orders, 'cancelled_count')) }} Delivered Orders</h3>
+                    <h3 class="text-white dark:text-neutral-400">{{ formatNumber(sumBy(purchase_orders, 'cancelled_count')) }} Cancelled Orders</h3>
                     <p class="text-lg text-white dark:text-red-500 font-medium">{{ formatCurrency(sumBy(purchase_orders, x => parseFloat(x.cancelled_amount))) }}</p>
                 </div>
             </div>
@@ -158,19 +161,19 @@ onBeforeMount(() => {
             <LineChart :chartData="chartData"
                        :options="chartOptions" />
 
-            <div class="flex flex-col space-y-6">
-                <div class="col-span-2 flex flex-col space-y-3">
+            <div class="flex flex-col gap-y-6">
+                <div class="col-span-2 flex flex-col gap-y-3">
                     <h3 class="font-medium">Trending Products</h3>
                     <h5 class="text-neutral-400 dark:text-neutral-500 font-medium">Last 30 days</h5>
-                    <div class="grid grid-cols-2 md:grid-cols-8 gap-6 justify-center">
+                    <div class="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-8 gap-3 justify-center">
                         <div v-for="product in trending_products"
-                             class="group dark:bg-neutral-800 p-2 rounded-md shadow transition ease-in-out">
+                             class="dark:bg-neutral-800 p-2 rounded-md shadow transition ease-in-out">
                             <div class="w-full p-1 rounded-t">
-                                <img :src="product.image ? `/storage/images/${product.image}` : '/images/placeholder.png'"
+                                <img :src="product.image ? `/storage/images/${product.image}` : '/images/placeholder.svg'"
                                      class="mx-auto rounded w-[100px] h-[100px]" />
                             </div>
                             <p :title="product.name"
-                               class="text-xs text-center group-hover:text-primary-500 dark:group-hover:text-primary-400 line-clamp-2">{{ product.name }}</p>
+                               class="text-xs text-center line-clamp-2">{{ product.name }}</p>
                         </div>
                     </div>
                 </div>

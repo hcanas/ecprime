@@ -39,13 +39,13 @@ const totalAmount = reduce(props.purchase_order.items, (t, item) => {
 
         <FlashMessage />
 
-        <div class="grid grid-cols-4 gap-6">
-            <div class="flex flex-col space-y-6">
+        <div class="flex flex-col xl:grid xl:grid-cols-4 xl:gap-x-6 gap-y-3">
+            <div class="flex flex-col md:grid md:grid-cols-2 md:gap-x-6 xl:flex xl:flex-col gap-y-6">
                 <CustomerInformation :customer="purchase_order.customer" />
                 <TrackingDetails :purchaseOrder="purchase_order" />
             </div>
 
-            <div class="col-span-3 flex flex-col space-y-6">
+            <div class="col-span-3 flex flex-col gap-y-6">
                 <Card class="h-max"
                       title="Items">
                     <CustomTable v-if="purchase_order.items"
@@ -53,9 +53,9 @@ const totalAmount = reduce(props.purchase_order.items, (t, item) => {
                                  :data="purchase_order.items">
                         <template #nameCol="{ rowData, index }">
                             <div class="flex flex-col">
-                                <img :src="rowData.image ? `/storage/images/${rowData.image}` : '/images/placeholder.png'"
+                                <img :src="rowData.image ? `/storage/images/${rowData.image}` : '/images/placeholder.svg'"
                                      alt="Image"
-                                     class="size-10" />
+                                     class="size-60 xl:size-14" />
                                 <span>{{ rowData.name }}</span>
                                 <span class="text-sm">{{ rowData.description }}</span>
                             </div>
@@ -74,10 +74,10 @@ const totalAmount = reduce(props.purchase_order.items, (t, item) => {
                         </template>
                     </CustomTable>
 
-                    <p class="text-right font-medium border-t pt-3">{{ formatCurrency(totalAmount) }}</p>
+                    <p class="text-right font-medium pt-3">{{ formatCurrency(totalAmount) }}</p>
                 </Card>
 
-                <div class="grid grid-cols-2 gap-6">
+                <div class="flex flex-col md:grid md:grid-cols-2 md:gap-x-6 gap-y-3">
                     <Card title="Payment Details">
                         <p class="text-sm italic">{{ purchase_order.payment_details ?? 'Not Specified' }}</p>
                     </Card>

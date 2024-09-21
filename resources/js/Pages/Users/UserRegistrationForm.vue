@@ -28,11 +28,11 @@ function submit() {
 
 <template>
     <BaseLayout>
-        <PageHead class="max-w-3xl mx-auto"
+        <PageHead class="xl:max-w-3xl mx-auto"
                   title="User Registration" />
 
         <form @submit.prevent="submit">
-            <div class="max-w-3xl mx-auto flex flex-col space-y-3">
+            <div class="xl:max-w-3xl mx-auto flex flex-col space-y-3">
                 <Card title="General Information">
                     <div class="flex flex-col space-y-3">
                         <div class="flex flex-col">

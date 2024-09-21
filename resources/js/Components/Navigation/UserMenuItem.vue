@@ -17,7 +17,7 @@ defineProps({
 </script>
 
 <template>
-    <MenuItem class="block w-full px-3 py-2 text-start transition duration-150 ease-in-out">
+    <MenuItem class="w-full px-3 py-2 transition duration-150 ease-in-out">
         <Link :as="as"
               :href="href"
               :method="method"

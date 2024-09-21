@@ -11,7 +11,7 @@ import {PhotoIcon} from "@heroicons/vue/16/solid/index.js";
 import TextAreaInput from "@/Components/TextAreaInput.vue";
 import {nextTick, ref, watch} from "vue";
 import LastModifiedBy from "@/Components/LastModifiedBy.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
+import DangerButton from "@/Components/DangerButton.vue";
 
 const props = defineProps({
     product: {
@@ -40,7 +40,7 @@ const statusOptions = [
 ];
 
 const textarea = ref(null);
-const imagePreview = ref(props.product?.image ? '/storage/images/' + props.product.image : '/images/placeholder.png');
+const imagePreview = ref(props.product?.image ? '/storage/images/' + props.product.image : '/images/placeholder.svg');
 
 function uploadFile(event) {
     form.image = event.target.files[0];
@@ -48,7 +48,7 @@ function uploadFile(event) {
 }
 
 function discardChanges() {
-    imagePreview.value = props.product?.image ? '/storage/images/' + props.product.image : '/images/placeholder.png';
+    imagePreview.value = props.product?.image ? '/storage/images/' + props.product.image : '/images/placeholder.svg';
     form.reset();
 }
 
@@ -81,7 +81,7 @@ watch(() => form.description, () => {
             <Card :title="'Product Image'">
                 <div class="flex flex-col items-center space-y-3">
                     <img :src="imagePreview"
-                         class="w-[200px] h-[200px]" />
+                         class="size-60" />
                     <span class="text-sm italic text-neutral-500">Images will be resized to 640x640.</span>
                     <InputLabel for="file">
                         <div class="flex items-center space-x-1 px-3 py-2 hover:text-white bg-neutral-100 hover:bg-primary-500 dark:bg-primary-500 dark:hover:bg-primary-400 cursor-pointer rounded-md transition ease-in-out">
@@ -169,21 +169,21 @@ watch(() => form.description, () => {
                 </div>
             </Card>
 
-            <div class="flex flex-row-reverse items-start justify-between">
-                <div class="flex items-center space-x-1">
-                    <SecondaryButton v-if="product && form.isDirty"
+            <div class="flex flex-col md:flex-row flex-col-reverse md:flex-row-reverse md:items-start md:justify-between gap-y-3">
+                <div class="flex-shrink-0 flex flex-col md:flex-row md:gap-x-3 gap-y-3">
+                    <DangerButton v-if="product && form.isDirty"
                                      @click="discardChanges">Discard Changes
-                    </SecondaryButton>
+                    </DangerButton>
                     <PrimaryButton :disabled="form.processing"
                                    @click="submit">{{ product?.id ? 'Save Changes' : 'Create Product' }}
                     </PrimaryButton>
                 </div>
 
-                <div class="flex flex-col">
+                <div v-if="product" class="flex flex-col">
                     <LastModifiedBy :dateTime="product?.updated_at"
                                     :user="product?.last_modified_by" />
-                    <p v-if="product && form.isDirty"
-                       class="text-sm text-red-500 italic">*** Any unsaved changes will be discarded.</p>
+                    <p v-if="form.isDirty"
+                       class="text-xs text-red-500 dark:text-red-500 italic">*** Any unsaved changes will be discarded.</p>
                 </div>
             </div>
         </div>

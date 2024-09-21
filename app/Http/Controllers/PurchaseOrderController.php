@@ -128,7 +128,7 @@ class PurchaseOrderController extends Controller
                     ]);
                 }
 
-                if (!$purchaseOrder->wasChanged()) $purchaseOrder->logActivity();
+                if (!$purchaseOrder->wasChanged()) $purchaseOrder->touch();
             }
 
             DB::commit();

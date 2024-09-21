@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 @layer base {
+    html,
+    body,
+    div#app {
+        @apply w-full h-full
+    }
+
     h1 {
         @apply text-2xl
     }

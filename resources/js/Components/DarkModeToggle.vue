@@ -28,14 +28,14 @@ watch(() => enabled.value, () => {
 
 <template>
     <SwitchGroup>
-        <div class="flex items-center space-x-1">
-            <SwitchLabel title="Light Mode">
-                <SunIcon class="size-4 text-yellow-400" />
+        <div class="md:flex md:items-center md:space-x-1">
+            <SwitchLabel :class="{ 'hidden md:inline': !enabled }" title="Light Mode">
+                <SunIcon class="size-5 text-yellow-400" />
             </SwitchLabel>
             <Switch
                 v-model="enabled"
                 :class="enabled ? 'bg-neutral-700' : 'bg-neutral-200'"
-                class="relative inline-flex h-4 w-10 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
+                class="hidden relative md:inline-flex h-4 w-10 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
             >
                 <span
                     :class="enabled ? 'translate-x-6' : 'translate-x-0'"
@@ -43,8 +43,8 @@ watch(() => enabled.value, () => {
                     class="pointer-events-none inline-block h-3 w-3 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out"
                 />
             </Switch>
-            <SwitchLabel title="Dark Mode">
-                <MoonIcon class="size-4 text-purple-600" />
+            <SwitchLabel :class="{ 'hidden md:inline': enabled }" title="Dark Mode">
+                <MoonIcon class="size-5 text-purple-600" />
             </SwitchLabel>
         </div>
     </SwitchGroup>

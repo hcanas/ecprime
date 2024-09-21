@@ -81,13 +81,13 @@ function cancelPurchaseOrder() {
 
         <FlashMessage />
 
-        <div class="grid grid-cols-4 gap-6">
-            <div class="flex flex-col space-y-6">
+        <div class="flex flex-col xl:grid xl:grid-cols-4 xl:gap-x-6 gap-y-3">
+            <div class="flex flex-col md:grid md:grid-cols-2 md:gap-x-6 xl:flex xl:flex-col gap-y-6">
                 <CustomerInformation :customer="purchase_order.customer" />
 
                 <TrackingDetails :purchaseOrder="purchase_order" />
 
-                <div class="flex flex-col space-y-6 border border-green-200 dark:border-neutral-800 dark:bg-neutral-800 rounded-md p-3 shadow">
+                <div class="flex flex-col gap-y-6 border border-green-200 dark:border-neutral-800 dark:bg-neutral-800 rounded-md p-3 shadow">
                     <div class="flex flex-col text-sm">
                         <p class="font-medium">Delivery Confirmation</p>
                         <p class="text-neutral-500">Confirming delivery will lock this record to prevent further modification. This action is irreversible.</p>
@@ -100,7 +100,7 @@ function cancelPurchaseOrder() {
                           class="text-red-500 text-sm italic">*** Payment details and delivery date must be set first.</span>
                 </div>
 
-                <div class="flex flex-col space-y-6 border border-red-200 dark:border-neutral-800 dark:bg-neutral-800 rounded-md p-3 shadow">
+                <div class="flex flex-col gap-y-6 border border-red-200 dark:border-neutral-800 dark:bg-neutral-800 rounded-md p-3 shadow">
                     <div class="flex flex-col text-sm">
                         <p class="font-medium">Cancellation</p>
                         <p class="text-neutral-500">Cancelling this purchase order will lock the record to prevent further modification. This action is irreversible.</p>
@@ -113,7 +113,7 @@ function cancelPurchaseOrder() {
 
             <form class="col-span-3"
                   @submit.prevent>
-                <div class="flex flex-col space-y-6">
+                <div class="flex flex-col gap-y-6">
                     <Card class="h-max"
                           title="Items">
                         <CustomTable v-if="form.items"
@@ -121,9 +121,9 @@ function cancelPurchaseOrder() {
                                      :data="form.items">
                             <template #nameCol="{ rowData, index }">
                                 <div class="flex flex-col">
-                                    <img :src="rowData.image ? `/storage/images/${rowData.image}` : '/images/placeholder.png'"
+                                    <img :src="rowData.image ? `/storage/images/${rowData.image}` : '/images/placeholder.svg'"
                                          alt="Image"
-                                         class="size-10" />
+                                         class="size-60 xl:size-14" />
                                     <span>{{ rowData.name }}</span>
                                     <span class="text-sm">{{ rowData.description }}</span>
                                     <InputError :message="form.errors[`items.${index}.id`]" />
@@ -138,9 +138,9 @@ function cancelPurchaseOrder() {
                             </template>
 
                             <template #quantityCol="{ rowData, index }">
-                                <div class="flex flex-col items-end">
+                                <div class="flex flex-col">
                                     <TextInput v-model="form.items[index].quantity"
-                                               class="w-20 text-right"
+                                               class="xl:w-20 xl:text-right"
                                                min="0"
                                                required
                                                type="number"
@@ -152,7 +152,7 @@ function cancelPurchaseOrder() {
                             <template #measurementUnitCol="{ rowData, index }">
                                 <div class="flex flex-col">
                                     <TextInput v-model="form.items[index].measurement_unit"
-                                               class="w-32"
+                                               class="xl:w-32"
                                                required
                                                @change="form.validate(`items.${index}.measurement_unit`)" />
                                     <InputError :message="form.errors[`items.${index}.measurement_unit`]" />
@@ -160,9 +160,9 @@ function cancelPurchaseOrder() {
                             </template>
 
                             <template #priceCol="{ rowData, index }">
-                                <div class="flex flex-col items-end">
+                                <div class="flex flex-col">
                                     <TextInput v-model="form.items[index].price"
-                                               class="w-36 text-right"
+                                               class="xl:w-36 xl:text-right"
                                                min="0"
                                                required
                                                type="number"
@@ -176,10 +176,10 @@ function cancelPurchaseOrder() {
                             </template>
                         </CustomTable>
 
-                        <p class="text-right font-medium border-t pt-3">{{ formatCurrency(totalAmount) }}</p>
+                        <p class="text-right font-medium pt-3">{{ formatCurrency(totalAmount) }}</p>
                     </Card>
 
-                    <div class="grid grid-cols-2 gap-6">
+                    <div class="flex flex-col md:grid md:grid-cols-2 md:gap-x-6 gap-y-3">
                         <Card title="Payment">
                             <div class="flex flex-col">
                                 <InputLabel>Payment Details</InputLabel>
@@ -194,14 +194,15 @@ function cancelPurchaseOrder() {
                                 <InputLabel>Delivery Date</InputLabel>
                                 <TextInput v-model="form.delivery_date"
                                            type="date"
+                                           class="w-full"
                                            @change="form.validate('delivery_date')" />
                                 <InputError :message="form.errors['delivery_date']" />
                             </div>
                         </Card>
                     </div>
 
-                    <div class="flex flex-row-reverse items-start justify-between">
-                        <div class="flex items-center justify-end space-x-1">
+                    <div class="flex flex-col md:flex-row flex-col-reverse md:flex-row-reverse md:items-start md:justify-between gap-y-3">
+                        <div class="flex-shrink-0 flex flex-col md:flex-row md:gap-x-3 gap-y-3">
                             <DangerButton v-if="form.isDirty"
                                           type="button"
                                           @click="form.reset()">
@@ -218,7 +219,7 @@ function cancelPurchaseOrder() {
                             <LastModifiedBy :dateTime="purchase_order.updated_at"
                                             :user="purchase_order.last_modified_by" />
                             <p v-if="form.isDirty"
-                               class="text-sm text-red-500 italic">*** Any unsaved changes will be discarded.</p>
+                               class="text-xs text-red-500 dark:text-red-500 italic">*** Any unsaved changes will be discarded.</p>
                         </div>
                     </div>
                 </div>

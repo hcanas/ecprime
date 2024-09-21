@@ -22,8 +22,8 @@ watch(
 
 <template>
     <TextInput v-model="query"
-               autofocus
-               class="w-96"
+               :autofocus="query.length"
+               class="md:w-60 xl:w-96"
                placeholder="Search keyword..."
                type="search" />
 </template>

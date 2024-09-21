@@ -11,7 +11,7 @@ defineProps({
 });
 
 const statusTagColors = {
-    draft: 'text-neutral-600',
+    draft: 'text-indigo-500',
     pending: 'text-yellow-400',
     sent: 'text-cyan-500',
     confirmed: 'text-green-500',
@@ -20,7 +20,7 @@ const statusTagColors = {
 </script>
 
 <template>
-    <Card class="h-max"
+    <Card class="xl:h-max"
           title="Tracking Details">
         <div class="flex flex-col space-y-3">
             <p class="flex flex-col">

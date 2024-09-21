@@ -15,8 +15,6 @@ const props = defineProps({
     },
 });
 
-const {formatDateTime} = useFormatter();
-
 function deleteProduct() {
     router.delete(route('products.destroy', {product: props.product.id}), {
         onBefore: () => confirm('This product will be deleted permanently.'),
@@ -26,18 +24,18 @@ function deleteProduct() {
 
 <template>
     <BaseLayout>
-        <PageHead class="max-w-3xl mx-auto"
+        <PageHead class="xl:max-w-3xl mx-auto"
                   title="Edit Product" />
 
-        <div class="max-w-3xl mx-auto flex flex-col">
+        <div class="xl:max-w-3xl mx-auto flex flex-col">
             <FlashMessage />
 
             <Form :product="product" />
 
             <Card class="border-red-300 mt-12"
                   title="Danger Zone">
-                <div class="flex items-center justify-between space-x-6">
-                    <div class="flex flex-col text-sm">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-y-3">
+                    <div class="flex flex-col gap-y-1 text-sm">
                         <p class="font-medium">Product Deletion</p>
                         <p class="text-neutral-500">Deleting this product will permanently remove it from the database. This action is irreversible.</p>
                         <p class="text-neutral-500 italic">*** Products with linked records can not be deleted.</p>

@@ -19,31 +19,29 @@ const {addItem, removeItem, itemExists} = useCart();
     <BaseLayout>
         <Head :title="product.name" />
 
-        <div class="max-w-7xl mx-auto">
-            <div class="flex items-start space-x-12">
-                <img :src="product.image ? `/storage/images/${product.image}` : '/images/placeholder.png'"
-                     class="w-[600px] h-[600px]" />
+        <div class="xl:max-w-5xl xl:mx-auto flex flex-col md:flex-row md:gap-x-6 gap-y-6">
+            <img :src="product.image ? `/storage/images/${product.image}` : '/images/placeholder.svg'"
+                 class="md:size-96 rounded-md" />
 
-                <div class="flex-grow flex flex-col space-y-6">
-                    <div class="flex flex-col space-y-3">
-                        <h1 class="font-medium">{{ product.name }}</h1>
-                        <p class="flex flex-col bg-neutral-100 p-3 rounded-md">
-                            <span class="text-sm text-neutral-500">Description</span>
-                            <span>{{ product.description }}</span>
-                        </p>
-                    </div>
+            <div class="flex-grow flex flex-col gap-y-6">
+                <div class="flex flex-col gap-y-3">
+                    <h1 class="font-medium">{{ product.name }}</h1>
+                    <p class="flex flex-col bg-neutral-100 dark:bg-neutral-900 p-3 rounded-md">
+                        <span class="text-sm text-neutral-500">Description</span>
+                        <span>{{ product.description }}</span>
+                    </p>
+                </div>
 
-                    <div class="flex items-center justify-between">
-                        <p class="text-sm italic">Sold per {{ product.measurement_unit }}</p>
-                        <PrimaryButton v-if="!itemExists(product.id)"
-                                       class="w-44"
-                                       @click="addItem(product.id)">Add To Cart
-                        </PrimaryButton>
-                        <DangerButton v-else
-                                      class="w-44"
-                                      @click="removeItem(product.id)">Remove From Cart
-                        </DangerButton>
-                    </div>
+                <div class="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-y-3">
+                    <p class="text-sm italic">Sold per {{ product.measurement_unit }}</p>
+                    <PrimaryButton v-if="!itemExists(product.id)"
+                                   class="xl:w-44"
+                                   @click="addItem(product.id)">Add To Cart
+                    </PrimaryButton>
+                    <DangerButton v-else
+                                  class="xl:w-44"
+                                  @click="removeItem(product.id)">Remove From Cart
+                    </DangerButton>
                 </div>
             </div>
         </div>

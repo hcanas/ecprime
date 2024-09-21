@@ -111,12 +111,12 @@ function cancelQuotation() {
 
         <FlashMessage />
 
-        <div class="grid grid-cols-4 gap-6">
-            <div class="flex flex-col space-y-6">
+        <div class="flex flex-col xl:grid xl:grid-cols-4 xl:gap-x-6 gap-y-3">
+            <div class="flex flex-col md:grid md:grid-cols-2 md:gap-x-6 xl:flex xl:flex-col gap-y-6">
                 <CustomerInformation :customer="quotation.customer" />
                 <TrackingDetails :quotation="quotation" />
 
-                <div class="flex flex-col space-y-6 border border-green-200 dark:border-neutral-800 dark:bg-neutral-800 rounded-md shadow p-3">
+                <div class="flex flex-col gap-y-6 border border-green-200 dark:border-neutral-800 dark:bg-neutral-800 rounded-md shadow p-3">
                     <div class="flex flex-col text-sm">
                         <p class="font-medium">Purchase Order</p>
                         <p class="text-neutral-500">Creating a purchase order will lock this record to prevent further modification. This action is irreversible.</p>
@@ -129,7 +129,7 @@ function cancelQuotation() {
                           class="text-sm text-red-500 italic">*** Send the quotation first to the customer for confirmation.</span>
                 </div>
 
-                <div class="flex flex-col space-y-6 border border-red-200 dark:border-neutral-800 dark:bg-neutral-800 rounded-md shadow p-3">
+                <div class="flex flex-col gap-y-6 border border-red-200 dark:border-neutral-800 dark:bg-neutral-800 rounded-md shadow p-3">
                     <div class="flex flex-col text-sm">
                         <p class="font-medium">Cancellation</p>
                         <p class="text-neutral-500">Cancelling this quotation will lock the record to prevent further modification. This action is irreversible.</p>
@@ -139,18 +139,19 @@ function cancelQuotation() {
                     </DangerButton>
                 </div>
             </div>
-            <form class="col-span-3"
+
+            <form class="xl:col-span-3"
                   @submit.prevent>
-                <div class="flex flex-col space-y-6">
+                <div class="flex flex-col gap-y-6">
                     <Card class="h-max"
                           title="Items">
                         <CustomTable :columns="columns"
                                      :data="form.items">
                             <template #nameCol="{ rowData, index }">
                                 <div class="flex flex-col">
-                                    <img :src="rowData.image ? `/storage/images/${rowData.image}` : '/images/placeholder.png'"
+                                    <img :src="rowData.image ? `/storage/images/${rowData.image}` : '/images/placeholder.svg'"
                                          alt="Image"
-                                         class="size-14" />
+                                         class="size-60 xl:size-14" />
                                     <span>{{ rowData.name }}</span>
                                     <span class="text-sm">{{ rowData.description }}</span>
                                     <span
@@ -160,7 +161,7 @@ function cancelQuotation() {
                                             class="w-max text-sm text-red-500 hover:underline"
                                             type="button"
                                             @click="form.items[index].status = 'unavailable'">
-                                        <div class="flex items-center space-x-1">
+                                        <div class="flex items-center gap-x-1">
                                             <XMarkIcon class="size-3" />
                                             <span>Mark Unavailable</span>
                                         </div>
@@ -170,7 +171,7 @@ function cancelQuotation() {
                                             class="w-max text-sm text-green-500 hover:underline"
                                             type="button"
                                             @click="form.items[index].status = 'available'">
-                                        <div class="flex items-center space-x-1">
+                                        <div class="flex items-center gap-x-1">
                                             <CheckIcon class="size-3" />
                                             <span>Mark Available</span>
                                         </div>
@@ -179,7 +180,7 @@ function cancelQuotation() {
                             </template>
 
                             <template #brandCol="{ rowData, index }">
-                                <span v-if="rowData.status === 'unavailable'">{{ rowData.brand }}</span>
+                                <span v-if="rowData.status === 'unavailable'">{{ rowData.brand ? rowData.brand : 'No Brand' }}</span>
                                 <div v-else
                                      class="flex flex-col">
                                     <TextInput v-model="form.items[index].brand"
@@ -193,7 +194,7 @@ function cancelQuotation() {
                                 <div v-else
                                      class="flex flex-col">
                                     <TextInput v-model="form.items[index].quantity"
-                                               class="w-20 text-right"
+                                               class="xl:w-20 xl:text-right"
                                                min="1"
                                                required
                                                type="number"
@@ -207,7 +208,7 @@ function cancelQuotation() {
                                 <div v-else
                                      class="flex flex-col">
                                     <TextInput v-model="form.items[index].measurement_unit"
-                                               class="w-32"
+                                               class="xl:w-32"
                                                required
                                                @change="form.validate(`items.${index}.measurement_unit`)" />
                                     <InputError :message="form.errors[`items.${index}.measurement_unit`]" />
@@ -219,7 +220,7 @@ function cancelQuotation() {
                                 <div v-else
                                      class="flex flex-col">
                                     <TextInput v-model="form.items[index].price"
-                                               class="w-36 text-right"
+                                               class="xl:w-36 xl:text-right"
                                                min="0"
                                                required
                                                type="number"
@@ -233,11 +234,11 @@ function cancelQuotation() {
                             </template>
                         </CustomTable>
 
-                        <p class="text-right font-medium border-t pt-3">{{ formatCurrency(totalAmount) }}</p>
+                        <p class="text-right font-medium pt-3">{{ formatCurrency(totalAmount) }}</p>
                     </Card>
 
-                    <div class="flex flex-row-reverse items-start justify-between">
-                        <div class="flex items-center space-x-1">
+                    <div class="flex flex-col md:flex-row flex-col-reverse md:flex-row-reverse md:items-start md:justify-between gap-y-3">
+                        <div class="flex-shrink-0 flex flex-col md:flex-row md:gap-x-3 gap-y-3">
                             <DangerButton v-if="form.isDirty"
                                           type="button"
                                           @click="form.reset()">Discard Changes
@@ -267,7 +268,7 @@ function cancelQuotation() {
                             <LastModifiedBy :dateTime="quotation.updated_at"
                                             :user="quotation.last_modified_by" />
                             <p v-if="form.isDirty"
-                               class="text-sm text-red-500 italic">*** Any unsaved changes will be discarded.</p>
+                               class="text-xs text-red-500 dark:text-red-500 italic">*** Any unsaved changes will be discarded.</p>
                         </div>
                     </div>
                 </div>

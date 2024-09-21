@@ -225,7 +225,7 @@ class QuotationController extends Controller
                     ]);
                 }
 
-                if (!$quotation->wasChanged()) $quotation->logActivity();
+                if (!$quotation->wasChanged()) $quotation->touch();
             }
 
             DB::commit();

@@ -38,7 +38,7 @@ const columns = [
 ];
 
 if (usePage().props.auth.user.role !== 'affiliate') {
-    columns.push({label: 'Price', field: 'price', align: 'right'});
+    columns.splice(3, 0, {label: 'Price', field: 'price', align: 'right'});
 }
 
 const categories = ref([]);
@@ -59,7 +59,6 @@ onMounted(() => {
     axios.get(route('api.categories'))
         .then(response => {
 
-            console.log(response.data);
             forEach(response.data, category => {
                 categories.value.push({name: category.name, level: 'main'});
 
@@ -74,7 +73,7 @@ onMounted(() => {
 <template>
     <BaseLayout>
         <PageHead title="Products">
-            <div class="flex items-center space-x-1">
+            <template #actions>
                 <ButtonLink v-if="can.create_product"
                             :href="route('products.create')">
                     <div class="flex items-center space-x-1">
@@ -82,6 +81,8 @@ onMounted(() => {
                         <span>New Product</span>
                     </div>
                 </ButtonLink>
+            </template>
+            <template #filters>
                 <TextFilter />
                 <CategoryFilter v-if="categories.length"
                                 :options="categories" />
@@ -89,7 +90,7 @@ onMounted(() => {
                             :options="onlyFilterOptions"
                             field="status"
                             label="Status" />
-            </div>
+            </template>
         </PageHead>
 
         <div class="flex flex-col">
@@ -98,9 +99,9 @@ onMounted(() => {
             <CustomTable :columns="columns"
                          :data="products.data">
                 <template #imageCol="{ rowData }">
-                    <img :src="rowData.image ? `/storage/images/${rowData.image}` : '/images/placeholder.png'"
+                    <img :src="rowData.image ? `/storage/images/${rowData.image}` : '/images/placeholder.svg'"
                          alt="Image"
-                         class="size-16" />
+                         class="size-60 xl:size-16" />
                 </template>
 
                 <template #nameCol="{ rowData }">

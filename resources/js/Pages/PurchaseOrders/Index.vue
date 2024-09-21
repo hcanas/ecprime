@@ -47,12 +47,12 @@ const statusTagColors = {
 <template>
     <BaseLayout>
         <PageHead title="Purchase Orders">
-            <div class="flex items-center space-x-1">
+            <template #filters>
                 <TextFilter />
                 <OnlyFilter :options="onlyFilterOptions"
                             field="status"
                             label="Status" />
-            </div>
+            </template>
         </PageHead>
 
         <div class="flex flex-col">

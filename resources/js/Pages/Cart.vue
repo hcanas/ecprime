@@ -13,6 +13,7 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import {XMarkIcon} from "@heroicons/vue/16/solid/index.js";
 import InputError from "@/Components/InputError.vue";
 import Card from "@/Components/Card.vue";
+import {usePage} from "@inertiajs/vue3";
 
 const cart = useCart();
 
@@ -25,24 +26,14 @@ const columns = [
 
 const items = ref([]);
 
+const user = usePage().props.auth?.user;
+
 const form = useForm('post', route('quotations.store'), {
-    email: '',
+    email: user?.email ?? '',
     contact_number: '',
     viber_id: '',
     items: [],
 });
-
-function updateItem(id, newData) {
-    cart.updateItem(id, newData);
-
-    forEach(items.value, (item, key) => {
-        if (item.id === id) {
-            items.value[key].quantity = parseInt(newData.quantity ?? item.quantity);
-            items.value[key].brand = newData.brand ?? item.brand;
-            return false;
-        }
-    });
-}
 
 function removeItem(id) {
     if (confirm('Remove item from cart.')) {
@@ -50,8 +41,6 @@ function removeItem(id) {
         remove(items.value, x => x.id === id);
     }
 }
-
-7
 
 function submit() {
     form.items = cart.items.value;
@@ -89,17 +78,17 @@ onMounted(() => {
 
         <form v-if="items.length"
               @submit.prevent="submit">
-            <div class="grid grid-cols-4 gap-6">
-                <Card class="col-span-3 h-max"
+            <div class="flex flex-col xl:grid xl:grid-cols-4 xl:gap-x-6 gap-y-3">
+                <Card class="xl:col-span-3 h-max"
                       title="Items">
                     <CustomTable :columns="columns"
                                  :data="items">
                         <template #nameCol="{ rowData, index }">
-                            <div class="flex flex-col space-y-3">
-                                <div class="flex items-center space-x-3">
-                                    <img :src="rowData.image ? `/storage/images/${rowData.image}` : '/images/placeholder.png'"
+                            <div class="flex flex-col gap-y-3">
+                                <div class="flex flex-col gap-y-1">
+                                    <img :src="rowData.image ? `/storage/images/${rowData.image}` : '/images/placeholder.svg'"
                                          alt="Image"
-                                         class="size-14" />
+                                         class="size-60 xl:size-24" />
                                     <p class="flex flex-col">
                                         <span>{{ rowData.name }}</span>
                                         <span class="text-sm">{{ rowData.description }}</span>
@@ -108,7 +97,7 @@ onMounted(() => {
                                 <button class="w-max text-sm text-red-500 hover:underline"
                                         type="button"
                                         @click="removeItem(rowData.id)">
-                                    <div class="flex items-center space-x-1">
+                                    <div class="flex items-center gap-x-1">
                                         <XMarkIcon class="size-3" />
                                         <span>Remove</span>
                                     </div>
@@ -118,19 +107,18 @@ onMounted(() => {
                         </template>
 
                         <template #brandCol="{ rowData, index }">
-                            <input :value="rowData.brand"
-                                   class="px-3 py-2 bg-neutral-100 border-gray-300 rounded-md shadow-sm outline-none focus:ring-0"
-                                   @change="updateItem(rowData.id, { brand: $event.target.value })" />
+                            <TextInput v-model="items[index].brand"
+                                       @input="cart.updateItem(rowData.id, { brand: $event.target.value })" />
                             <InputError :message="form.errors[`items.${index}.brand`]" />
                         </template>
 
                         <template #quantityCol="{ rowData, index }">
-                            <input :value="rowData.quantity"
-                                   class="w-24 text-right px-3 py-2 bg-neutral-100 border-gray-300 rounded-md shadow-sm outline-none focus:ring-0"
-                                   min="1"
-                                   required
-                                   type="number"
-                                   @change="updateItem(rowData.id, { quantity: $event.target.value })" />
+                            <TextInput v-model="items[index].quantity"
+                                       min="1"
+                                       required
+                                       type="number"
+                                       class="xl:text-right"
+                                       @input="cart.updateItem(rowData.id, { quantity: $event.target.value })" />
                             <InputError :message="form.errors[`items.${index}.quantity`]" />
                         </template>
                     </CustomTable>
@@ -138,22 +126,22 @@ onMounted(() => {
 
                 <Card class="h-max"
                       title="Contact Information">
-                    <div class="flex flex-col space-y-3">
-                        <div class="flex flex-col space-y-1">
+                    <div class="flex flex-col gap-y-3">
+                        <div class="flex flex-col gap-y-1">
                             <InputLabel>Email</InputLabel>
                             <TextInput v-model="form.email"
                                        type="email"
                                        @change="form.validate('email')" />
                             <InputError :message="form.errors.email" />
                         </div>
-                        <div class="flex flex-col space-y-1">
+                        <div class="flex flex-col gap-y-1">
                             <InputLabel>Contact Number</InputLabel>
                             <TextInput v-model="form.contact_number"
                                        type="number"
                                        @change="form.validate('contact_number')" />
                             <InputError :message="form.errors.contact_number" />
                         </div>
-                        <div class="flex flex-col space-y-1">
+                        <div class="flex flex-col gap-y-1">
                             <InputLabel>Viber ID</InputLabel>
                             <TextInput v-model="form.viber_id"
                                        @change="form.validate('viber_id')" />

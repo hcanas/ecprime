@@ -18,7 +18,7 @@ const statusTagColors = {
 </script>
 
 <template>
-    <Card class="h-max"
+    <Card class="xl:h-max"
           title="Tracking Details">
         <div class="flex flex-col space-y-3">
             <p class="flex flex-col">

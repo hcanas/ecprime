@@ -8,6 +8,6 @@ class CartController extends Controller
 {
     public function __invoke()
     {
-        return Inertia::render('Cart/Index');
+        return Inertia::render('Cart');
     }
 }

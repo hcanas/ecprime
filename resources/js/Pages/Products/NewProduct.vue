@@ -7,10 +7,10 @@ import FlashMessage from "@/Components/FlashMessage.vue";
 
 <template>
     <BaseLayout>
-        <PageHead class="max-w-3xl mx-auto"
+        <PageHead class="xl:max-w-3xl mx-auto"
                   title="New Product" />
 
-        <div class="max-w-3xl mx-auto">
+        <div class="xl:max-w-3xl mx-auto">
             <FlashMessage />
             <Form />
         </div>

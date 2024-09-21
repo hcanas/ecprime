@@ -51,10 +51,10 @@ onMounted(() => {
 <template>
     <Listbox v-model="selected">
         <div class="relative">
-            <ListboxButton class="hover:text-primary-500 dark:text-white dark:hover:text-primary-400 dark:bg-neutral-700 dark:border-neutral-700 px-3 py-2.5 rounded-md shadow-sm border">
-                <div class="flex items-center space-x-1">
+            <ListboxButton class="w-full hover:text-primary-500 dark:text-white dark:hover:text-primary-400 dark:bg-neutral-700 dark:border-neutral-700 px-3 py-2.5 rounded-md shadow-sm border">
+                <div class="flex items-center gap-x-1">
                     <span class="text-sm">Category:</span>
-                    <span class="text-sm">{{ selected?.name + (selected?.parent ? '(' + selected.parent + ')' : '') }}</span>
+                    <span class="flex-grow text-left text-sm truncate">{{ selected?.name + (selected?.parent ? '(' + selected.parent + ')' : '') }}</span>
                     <ChevronDownIcon class="size-4" />
                 </div>
             </ListboxButton>
@@ -64,13 +64,13 @@ onMounted(() => {
                 leave-from-class="opacity-100"
                 leave-to-class="opacity-0"
             >
-                <ListboxOptions class="z-50 absolute mt-1 max-h-60 w-max overflow-auto rounded-md bg-white border dark:text-white dark:bg-neutral-700 dark:border-neutral-700 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                <ListboxOptions class="z-50 absolute md:right-0 mt-1 max-h-60 w-full md:w-max overflow-auto rounded-md bg-white border dark:text-white dark:bg-neutral-700 dark:border-neutral-700 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
                     <ListboxOption
                         v-for="option in tempOptions"
                         :key="option.name"
                         :class="{ 'pl-6': option.level === 'sub' }"
                         :value="option"
-                        class="px-2 py-1 hover:text-primary-500 dark:hover:text-primary-400 cursor-pointer"
+                        class="px-2 py-2 hover:text-primary-500 dark:hover:text-primary-400 cursor-pointer"
                     >
                         {{ option.name }}
                     </ListboxOption>
