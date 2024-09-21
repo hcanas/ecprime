@@ -24,11 +24,11 @@
     
     cd ~
     
-    $ git clone https://github.com/hcanas/decon
+    $ git clone https://github.com/hcanas/ecprime
     ```
 3. Install php dependencies
     ```
-    $ cd decon
+    $ cd ecprime
     
     $ composer install
     ```
