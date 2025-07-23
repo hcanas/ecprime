@@ -1,4 +1,5 @@
-
+> ⚠️ **Note:** This project was discontinued due to unforeseen legal issues faced by the client.  
+> The codebase has been made publicly available for educational and reference purposes only.
 
 # Installation Guide (Windows)
 ### Prerequisites
